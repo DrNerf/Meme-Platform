@@ -24,6 +24,8 @@ namespace Meme_Platform
 
         public IConfiguration Configuration { get; }
 
+        public bool IsDevelopment { get; } = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,7 +39,12 @@ namespace Meme_Platform
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
-            services.AddRazorPages();
+            
+            var mvcBuilder = services.AddRazorPages();
+            if (IsDevelopment)
+            {
+                mvcBuilder.AddRazorRuntimeCompilation();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
