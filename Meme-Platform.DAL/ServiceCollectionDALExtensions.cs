@@ -7,6 +7,8 @@ namespace Meme_Platform.DAL
     {
         public static void AddRepositories(this IServiceCollection services)
         {
+            services.AddTransient<PlatformContext>();
+
             services.AddRepo<Comment>();
             services.AddRepo<Content>();
             services.AddRepo<Post>();

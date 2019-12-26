@@ -62,6 +62,7 @@ namespace Meme_Platform.Core.Services.Classes
         {
             postRepository?.Dispose();
             contentRepository?.Dispose();
+            profileRepository?.Dispose();
         }
     }
 }

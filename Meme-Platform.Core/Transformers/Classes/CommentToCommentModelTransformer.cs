@@ -11,17 +11,11 @@ namespace Meme_Platform.Core.Transformers.Classes
     internal class CommentToCommentModelTransformer : ITransformer<Comment, CommentModel>
     {
         private readonly ITransformer<Profile, ProfileModel> profileTransformer;
-        private readonly ITransformer<Post, PostModel> postTransformer;
-        private readonly ICollectionTransformer<Comment, CommentModel> commentsTransformer;
 
         public CommentToCommentModelTransformer(
-            ITransformer<Profile, ProfileModel> profileTransformer,
-            ITransformer<Post, PostModel> postTransformer,
-            ICollectionTransformer<Comment, CommentModel> commentsTransformer)
+            ITransformer<Profile, ProfileModel> profileTransformer)
         {
             this.profileTransformer = profileTransformer;
-            this.postTransformer = postTransformer;
-            this.commentsTransformer = commentsTransformer;
         }
 
         public CommentModel Transform(Comment source)
@@ -32,8 +26,7 @@ namespace Meme_Platform.Core.Transformers.Classes
                 Owner = profileTransformer.Transform(source.Owner),
                 Text = source.Text,
                 Parent = source.Parent != null ? Transform(source.Parent) : null,
-                PostOwner = postTransformer.Transform(source.PostOwner),
-                Comments = commentsTransformer.Transform(source.Comments).ToList()
+                Comments = source.Comments.Select(c => Transform(c)).ToList()
             };
         }
     }

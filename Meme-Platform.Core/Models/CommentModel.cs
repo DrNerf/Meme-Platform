@@ -11,8 +11,6 @@ namespace Meme_Platform.Core.Models
 
         public ProfileModel Owner { get; set; }
 
-        public PostModel PostOwner { get; set; }
-
         public ICollection<CommentModel> Comments { get; set; }
 
         public CommentModel Parent { get; set; }
