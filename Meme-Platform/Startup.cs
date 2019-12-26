@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Meme_Platform.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,9 @@ namespace Meme_Platform
             {
                 mvcBuilder.AddRazorRuntimeCompilation();
             }
+
+            // Registers all inhouse services including DAL repos.
+            services.Bootstrap();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
