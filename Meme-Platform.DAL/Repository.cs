@@ -19,9 +19,9 @@ namespace Meme_Platform.DAL
             dbSet = dbContext.Set<TEntity>();
         }
 
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
-            dbSet.Add(entity);
+            return dbSet.Add(entity).Entity;
         }
 
         public void Delete(TEntity entity)

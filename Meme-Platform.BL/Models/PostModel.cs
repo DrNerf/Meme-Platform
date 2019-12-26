@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Meme_Platform.BL.Models
+namespace Meme_Platform.Core.Models
 {
     public class PostModel
     {

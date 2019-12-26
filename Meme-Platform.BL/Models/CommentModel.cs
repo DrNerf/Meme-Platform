@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Meme_Platform.BL.Models
+namespace Meme_Platform.Core.Models
 {
     public class CommentModel
     {

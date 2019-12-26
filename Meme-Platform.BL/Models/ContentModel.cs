@@ -1,4 +1,4 @@
-﻿namespace Meme_Platform.BL.Models
+﻿namespace Meme_Platform.Core.Models
 {
     public class ContentModel
     {

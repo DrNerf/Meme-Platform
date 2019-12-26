@@ -8,7 +8,7 @@ namespace Meme_Platform.DAL
         where TEntity : class
     {
         IQueryable<TEntity> Get();
-        void Add(TEntity entity);
+        TEntity Add(TEntity entity);
         void Delete(TEntity entity);
         void Update(TEntity entity);
         Task SaveChangesAsync();

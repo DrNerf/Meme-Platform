@@ -11,7 +11,7 @@ namespace Meme_Platform.DAL.Entities
             Votes = new List<Vote>();
         }
 
-        public int PostId { get; set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 

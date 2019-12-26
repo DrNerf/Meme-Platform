@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform", "Meme-Platf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform.DAL", "Meme-Platform.DAL\Meme-Platform.DAL.csproj", "{BB90A969-92B1-4185-AA18-D1AB7C145C15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform.BL", "Meme-Platform.BL\Meme-Platform.BL.csproj", "{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform.Core", "Meme-Platform.BL\Meme-Platform.Core.csproj", "{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
