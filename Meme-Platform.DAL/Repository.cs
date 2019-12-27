@@ -45,6 +45,11 @@ namespace Meme_Platform.DAL
             return dbContext.SaveChangesAsync();
         }
 
+        public int SaveChanges()
+        {
+            return dbContext.SaveChanges();
+        }
+
         public void Dispose()
         {
             dbContext.Dispose();

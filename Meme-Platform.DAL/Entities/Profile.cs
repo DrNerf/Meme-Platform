@@ -13,5 +13,7 @@ namespace Meme_Platform.DAL.Entities
         public string ProfilePictureUrl { get; set; }
 
         public string ADIdentifier { get; set; }
+
+        public string Nickname { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace Meme_Platform.Core.Transformers.Classes
             return new ProfileModel 
             {
                 ProfilePictureUrl = source.ProfilePictureUrl,
-                ADIdentifier = source.ADIdentifier
+                ADIdentifier = source.ADIdentifier,
+                Nickname = source.Nickname
             };
         }
     }

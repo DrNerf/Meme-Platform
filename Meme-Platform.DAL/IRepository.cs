@@ -12,5 +12,6 @@ namespace Meme_Platform.DAL
         void Delete(TEntity entity);
         void Update(TEntity entity);
         Task SaveChangesAsync();
+        int SaveChanges();
     }
 }

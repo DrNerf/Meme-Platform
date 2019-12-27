@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Create post";
+}
+
+<div class="col-lg-4">
+    <div class="row">
+        <div>
+            @using (Html.BeginForm("Upload", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <input class="form-control" name="title" id="title" placeholder="Title:" />
+                </div>
+                <div class="row">
+                    <input type="file" name="image" class="input-files btn btn-default" id="file-input" />
+                    <input type="text"
+                           name="youTubeLink"
+                           style="display: none;"
+                           class="form-control"
+                           id="youtube-input"
+                           placeholder="YouTube video link..." />
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        @*<div class="squaredTwo">
+                            <input type="checkbox"
+                                   id="isNSFW"
+                                   name="isNSFW"
+                                   value="true" />
+                            <label for="isNSFW">
+                            </label>
+                        </div>
+                        <input type="hidden" value="false" name="isNSFW" />*@
+                        <input type="checkbox" name="isNSFW" />
+                    </div>
+                    <div class="col-md-10">
+                        <br />
+                        <label for="isNSFW"
+                               style="font-size:16px;">
+                            Not safe for work <br />
+                            (Graphic content or nudity)
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" name="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-upload"></span>
+                        Upload
+                    </button>
+                    <button type="button" class="btn btn-default" id="button-play">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

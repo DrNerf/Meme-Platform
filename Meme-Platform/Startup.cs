@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Meme_Platform.Attributes;
 using Meme_Platform.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
@@ -49,6 +50,9 @@ namespace Meme_Platform
 
             // Registers all inhouse services including DAL repos.
             services.Bootstrap();
+
+            // Register MVC services.
+            services.AddTransient<ManageUserProfilesFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +83,9 @@ namespace Meme_Platform
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            // Creates/Updates the database schema.
+            app.SetupDB();
         }
     }
 }

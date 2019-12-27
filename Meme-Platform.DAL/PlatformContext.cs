@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Meme_Platform.DAL
 {
-    internal class PlatformContext : DbContext
+    public class PlatformContext : DbContext
     {
         public DbSet<Comment> Comments { get; set; }
 
@@ -16,6 +16,8 @@ namespace Meme_Platform.DAL
         public DbSet<PostOfTheDay> PostsOfTheDay { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost:5432;Database=meme-platform;Username=user;Password=user");
+        {
+            optionsBuilder.UseNpgsql("Host=127.0.0.1;Database=meme-platform;Username=user;Password=user");
+        }
     }
 }
