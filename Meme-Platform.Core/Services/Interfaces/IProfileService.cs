@@ -6,6 +6,6 @@ namespace Meme_Platform.Core.Services.Interfaces
     {
         ProfileModel GetProfile(string ADIndentifier);
 
-        void CreateIfMissing(string nickname, string ADIdentifier);
+        ProfileModel GetOrCreate(string nickname, string ADIdentifier);
     }
 }

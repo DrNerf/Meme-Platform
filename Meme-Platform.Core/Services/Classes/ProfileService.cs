@@ -26,11 +26,12 @@ namespace Meme_Platform.Core.Services.Classes
             return profile == null ? null : profileTransformer.Transform(profile);
         }
 
-        public void CreateIfMissing(string nickname, string ADIdentifier)
+        public ProfileModel GetOrCreate(string nickname, string ADIdentifier)
         {
-            if (GetProfile(ADIdentifier) == null)
+            var profile = GetProfile(ADIdentifier);
+            if (profile == null)
             {
-                profileRepository.Add(new Profile
+                var dbProfile = profileRepository.Add(new Profile
                 {
                     ADIdentifier = ADIdentifier,
                     ProfilePictureUrl = "~/img/Doge.png",
@@ -38,7 +39,10 @@ namespace Meme_Platform.Core.Services.Classes
                 });
 
                 profileRepository.SaveChanges();
+                profile = profileTransformer.Transform(dbProfile);
             }
+
+            return profile;
         }
 
         public void Dispose()

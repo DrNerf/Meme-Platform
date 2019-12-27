@@ -1,4 +1,6 @@
-﻿using Meme_Platform.Core.Services.Interfaces;
+﻿using Meme_Platform.Core.Models;
+using Meme_Platform.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace Meme_Platform.Attributes
     public class ManageUserProfilesFilter : ActionFilterAttribute, IAuthorizationFilter
     {
         private readonly IProfileService profileService;
+        private ProfileModel profileModel = null;
 
         public ManageUserProfilesFilter(IProfileService profileService)
         {
@@ -19,8 +22,21 @@ namespace Meme_Platform.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var firstNameClaim = context.HttpContext.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname");
-            profileService.CreateIfMissing(firstNameClaim.Value, context.HttpContext.User.Identity.Name);
+            profileModel = profileService.GetOrCreate(
+                firstNameClaim.Value,
+                context.HttpContext.User.Identity.Name);
             profileService.Dispose();
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+
+            var controller = context.Controller as Controller;
+            if (controller != null && profileModel != null)
+            {
+                controller.ViewBag.UserProfile = profileModel;
+            }
         }
     }
 }
