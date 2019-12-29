@@ -52,7 +52,8 @@ namespace Meme_Platform.DAL
 
         public void Dispose()
         {
-            dbContext.Dispose();
+            // @ST let the services container manage the DB context instance.
+            // dbContext.Dispose();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Meme_Platform.DAL.Entities
     {
         public int Id { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 
         public string ProfilePictureUrl { get; set; }
 

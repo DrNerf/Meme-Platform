@@ -1,4 +1,5 @@
 ﻿using Meme_Platform.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Meme_Platform.DAL
@@ -7,7 +8,8 @@ namespace Meme_Platform.DAL
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<PlatformContext>();
+            services.AddDbContext<PlatformContext>(
+                options => options.UseNpgsql("Host=127.0.0.1;Database=meme-platform;Username=user;Password=user"));
 
             services.AddRepo<Comment>();
             services.AddRepo<Content>();

@@ -5,6 +5,11 @@ namespace Meme_Platform.DAL
 {
     public class PlatformContext : DbContext
     {
+        public PlatformContext(DbContextOptions<PlatformContext> options)
+            :base(options)
+        {
+        }
+
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Content> Contents { get; set; }
@@ -15,9 +20,6 @@ namespace Meme_Platform.DAL
 
         public DbSet<PostOfTheDay> PostsOfTheDay { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=127.0.0.1;Database=meme-platform;Username=user;Password=user");
-        }
+        public DbSet<Profile> Profiles { get; set; }
     }
 }
