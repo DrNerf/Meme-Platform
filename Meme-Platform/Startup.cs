@@ -49,7 +49,7 @@ namespace Meme_Platform
             }
 
             // Registers all inhouse services including DAL repos.
-            services.Bootstrap();
+            services.Bootstrap(Configuration);
 
             // Register MVC services.
             services.AddTransient<ManageUserProfilesFilter>();

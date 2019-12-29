@@ -5,15 +5,17 @@ using Meme_Platform.Core.Transformers.Classes;
 using Meme_Platform.Core.Transformers.Interfaces;
 using Meme_Platform.DAL;
 using Meme_Platform.DAL.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Meme_Platform.Core
 {
     public static class ServiceCollectionCoreExtensions
     {
-        public static void Bootstrap(this IServiceCollection services)
+        public static void Bootstrap(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddRepositories();
+            services.AddSingleton<CoreConfig>();
+            services.AddRepositories(configuration);
             services.AddTransformers();
             services.AddServices();
         }
