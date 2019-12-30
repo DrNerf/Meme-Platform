@@ -1,0 +1,85 @@
+﻿@using Meme_Platform.Core.Models
+@using Meme_Platform.Extensions
+
+@model IEnumerable<PostModel>
+
+@foreach (var post in Model)
+{
+    var userVote = post.Votes.FirstOrDefault(v => v.Voter.ADIdentifier == User.Identity.Name);
+    var hasUserVoted = userVote != null;
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="/Posts/View/@(post.Id)">@post.Title</a></h3>
+        </div>
+        <div class="panel-body post-panel-body">
+            @if (post.Content.ContentType == ContentType.Image)
+            {
+                <div class="post-content-wrapper">
+                    @if (post.IsNSFW)
+                    {
+                        <div class="nsfw-overlay"
+                             data-id="nsfw-@(post.Id)">
+                            <div>
+                                <h1 class="glyphicon glyphicon-warning-sign"></h1>
+                                <h1>NSFW</h1>
+                                <h3>This post is marked as not safe for work</h3>
+                                <h2>Click to view the post</h2>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="loading-overlay"
+                         id="loading-overlay-@(post.Id)">
+                        <div class="loading animated fadeIn">
+                            <div class="bg"></div>
+                        </div>
+                    </div>
+
+                    <a href="/Posts/View/@(post.Id)">
+                        <img src="@(post.Content.GetImageUrl())"
+                             data-id="@(post.Id)"
+                             class="post-image" />
+                    </a>
+                </div>
+            }
+            else
+            {
+                @*<text>@Html.Raw(post.YouTubeLink)</text>*@
+            }
+        </div>
+        <div class="panel-footer">
+            @*<div>
+                    <span class="text-info text">Score: <span id="score-@(post.Id)">@post.CalculateScore()</span></span>
+                </div>*@
+            <div class="btn-group" role="group">
+                <span class="btn btn-default btn-group-label">
+                    Points <span id="score-@(post.Id)" class="badge">@post.CalculateScore()</span>
+                </span>
+                <button onclick="vote(@(post.Id), 1)"
+                        data-unvote="@(hasUserVoted)"
+                        id="upvote-@(post.Id)"
+                        class="btn
+                                    @(hasUserVoted && (int)userVote.Type > 0 ? "btn-success" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+                <button onclick="vote(@(post.Id), -1)"
+                        data-unvote="@(hasUserVoted)"
+                        id="downvote-@(post.Id)"
+                        class="btn
+                                    @(hasUserVoted && (int)userVote.Type < 0 ? "btn-danger" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button class="btn @(post.AnyNewComments() ? "btn-success" : "btn-primary")"
+                        onclick="window.location.href = '/Posts/View/@(post.Id)';">
+                    <i class="glyphicon glyphicon-comment"></i>
+                    <span class="badge">@(post.CountComments())</span>
+                </button>
+            </div>
+
+            <span class="pull-right text-info">
+                <i class="glyphicon glyphicon-calendar"></i><span>@post.DateCreated.ToString("d")</span>
+            </span>
+        </div>
+    </div>
+}

@@ -15,7 +15,8 @@ namespace Meme_Platform.Core.Transformers.Classes
             {
                 Data = source.Data,
                 Extension = source.Extension,
-                ContentType = convertContentType(source.ContentType)
+                ContentType = convertContentType(source.ContentType),
+                Id = source.Id
             };
         }
 

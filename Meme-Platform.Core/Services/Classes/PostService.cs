@@ -86,7 +86,7 @@ namespace Meme_Platform.Core.Services.Classes
         public async Task<PostModel> GetPostOfTheDay()
         {
             var postOfTheDay = postOfTheDayRepository.Get()
-                .FirstOrDefault(p => p.Date == DateTime.Now);
+                .FirstOrDefault(p => p.Date == DateTime.Now.Date);
             if (postOfTheDay == null)
             {
                 var randomPost = postRepository.Get()

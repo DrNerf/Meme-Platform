@@ -21,5 +21,10 @@ namespace Meme_Platform.DAL
         public DbSet<PostOfTheDay> PostsOfTheDay { get; set; }
 
         public DbSet<Profile> Profiles { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

@@ -2,6 +2,8 @@
 {
     public class ContentModel
     {
+        public int Id { get; set; }
+
         public ContentType ContentType { get; set; }
 
         public byte[] Data { get; set; }

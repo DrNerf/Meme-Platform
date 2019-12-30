@@ -1,8 +1,96 @@
-﻿@{
+﻿@using Meme_Platform.Extensions
+@using Meme_Platform.Core.Models
+
+@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Asd</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="col-lg-4 col-lg-push-8">
+    <div class="">
+        <a href="@Url.Action("Upload", "Home")"
+           class="btn btn-primary btn-block">
+            <span class="glyphicon glyphicon-upload"></span>
+            Upload
+        </a>
+    </div>
+    <br />
+    <div class="">
+        @if (Model.PostOfTheDay != null)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Post of the day:</div>
+                <div class="panel-body">
+                    <a href="/Posts/View/@(Model.PostOfTheDay.Id)">
+                        @string.Format(
+                         "{0} with {1} points!",
+                         Model.PostOfTheDay.Title,
+                         Model.PostOfTheDay.Votes.Sum(v => (int)v.Type))
+                    </a>
+                    <div class="post-preview">
+                        <a href="/Posts/View/@(Model.PostOfTheDay.Id)">
+                            <img src="@(Model.PostOfTheDay.Content.GetImageUrl())" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="panel panel-default">
+            <div class="panel-heading">Top contributors:</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var contributor in Model.TopContributors)
+                    {
+                        <li class="list-group-item">
+                            <img width="30" src="@Url.Content(contributor.ProfilePictureUrl)" />
+                            @contributor.Nickname
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top posts:</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var post in Model.TopPosts)
+                    {
+                        <li class="list-group-item">
+                            <a href="/Posts/View/@(post.Id)">
+                                @string.Format(
+                                    "{0} with {1} points!",
+                                    post.Title,
+                                    post.Votes.Sum(v => (int)v.Type))
+                            </a>
+                            <div class="post-preview">
+                                <a href="/Posts/View/@(post.Id)">
+                                    @if (post.Content.ContentType == ContentType.Image)
+                                    {
+                                        <img src="@(post.Content.GetImageUrl())" />
+                                    }
+                                    else
+                                    {
+                                        @*<img src="@(post.YouTubeLink.GetYoutubeThumbnail())" />*@
+                                    }
+                                </a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-8 col-lg-pull-4">
+    <div id="posts-container">
+        @await Component.InvokeAsync("PostsPage", new { page = 1 })
+    </div>
+    <div class="progress-spinner sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    </div>
 </div>
