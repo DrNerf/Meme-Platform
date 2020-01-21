@@ -104,7 +104,7 @@ namespace Meme_Platform.Core.Services.Classes
                 }
             }
 
-            return postTransformer.Transform(postOfTheDay.Post);
+            return postOfTheDay != null ? postTransformer.Transform(postOfTheDay.Post) : null;
         }
 
         public IEnumerable<PostModel> GetTopPosts()
