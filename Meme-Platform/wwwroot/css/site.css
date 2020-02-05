@@ -1,3 +1,386 @@
-﻿.nav-item {
+﻿body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.post-image {
+    width: 100%;
+    margin: 0px;
+    transition: transform .2s;
+}
+
+.post-content-wrapper > a > .post-image:hover {
+    transform: scale(1.1);
+}
+
+.post-row {
+    border-bottom: 1px solid #dadada;
+    /*position: relative;*/
+}
+
+.text-editor {
+    height: 100px !important;
+    max-width: 999999px;
+    width: 100%;
+}
+
+.comment-row {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #dadada;
+}
+
+.reply-row {
+    border-bottom: 0px solid #dadada;
+}
+
+.comment-image {
+    border: 1px solid #ef4c3a;
+    width: 80%;
+    max-width: 300px !important;
+}
+
+.person-image {
+    max-height: 100px !important;
+    max-width: 100px !important;
+    border: 1px solid #ef4c3a;
+}
+
+.person-name {
+    font-size: 18px;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spinw {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spinm {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+.quote-row {
+    background: black;
+    padding: 15px;
+    font-family: 'Segoe Script';
+    border: 1px solid #ef4c3a;
+}
+
+.quote-author-img {
+    width: 60px;
+    height: 60px;
+}
+
+.inline {
+    display: inline;
+}
+
+.form-control-fix {
+    max-width: 9999999px !important;
+}
+
+pre {
+    border: 1px solid #ef4c3a;
+}
+
+.chat-container {
+    height: 500px;
+    overflow: auto;
+    border: 1px solid #ef4c3a;
+    border-bottom: 0px;
+    background: #4e5d6c;
+    padding: 15px;
+}
+
+.chat-row {
+    margin-top: 15px !important;
+}
+
+.bubble-right {
+    position: relative;
+    min-height: 70px;
+    padding: 10px;
+    background: #2b3e50;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    border: #ef4c3a solid 1px;
+    vertical-align: middle;
+}
+
+    .bubble-right:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 15px 0 15px 15px;
+        border-color: transparent #2b3e50;
+        display: block;
+        width: 0;
+        z-index: 1;
+        right: -15px;
+        top: 35px;
+    }
+
+    .bubble-right:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 15px 0 15px 15px;
+        border-color: transparent #ef4c3a;
+        display: block;
+        width: 0;
+        z-index: 0;
+        right: -16px;
+        top: 35px;
+    }
+
+.bubble-left {
+    position: relative;
+    /*width: 300px;*/
+    min-height: 70px;
+    padding: 10px;
+    background: #2b3e50;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    border: #ef4c3a solid 1px;
+}
+
+    .bubble-left:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 15px 15px 15px 0;
+        border-color: transparent #2b3e50;
+        display: block;
+        width: 0;
+        z-index: 1;
+        left: -15px;
+        top: 35px;
+    }
+
+    .bubble-left:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 15px 15px 15px 0;
+        border-color: transparent #ef4c3a;
+        display: block;
+        width: 0;
+        z-index: 0;
+        left: -16px;
+        top: 35px;
+    }
+
+.chat-thumbnail {
+    height: 100%;
+    width: 100%;
+}
+
+.flex-center-vertically {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 45px;
+}
+
+.post-preview {
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid #ef4c3a;
+}
+
+    .post-preview img {
+        width: 100%;
+    }
+
+.nsfw-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ef4c3a;
+    background-color: #2b3e50;
+    z-index: 998;
+    text-align: center;
     cursor: pointer;
+}
+
+.post-content-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-group-label {
+    cursor: none !important;
+    pointer-events: none;
+}
+
+.post-panel-body {
+    padding: 0px !important;
+}
+
+.loading-overlay {
+    /*background-color: #ef4c3a;*/
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 997;
+    text-align: center;
+    cursor: progress;
+    border: 2px solid #ef4c3a;
+}
+
+.sk-folding-cube {
+    margin: 20px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    -webkit-transform: rotateZ(45deg);
+    transform: rotateZ(45deg);
+}
+
+    .sk-folding-cube .sk-cube {
+        float: left;
+        width: 50%;
+        height: 50%;
+        position: relative;
+        -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+        .sk-folding-cube .sk-cube:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ef4c3a;
+            -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+            animation: sk-foldCubeAngle 2.4s infinite linear both;
+            -webkit-transform-origin: 100% 100%;
+            -ms-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
+        }
+
+    .sk-folding-cube .sk-cube2 {
+        -webkit-transform: scale(1.1) rotateZ(90deg);
+        transform: scale(1.1) rotateZ(90deg);
+    }
+
+    .sk-folding-cube .sk-cube3 {
+        -webkit-transform: scale(1.1) rotateZ(180deg);
+        transform: scale(1.1) rotateZ(180deg);
+    }
+
+    .sk-folding-cube .sk-cube4 {
+        -webkit-transform: scale(1.1) rotateZ(270deg);
+        transform: scale(1.1) rotateZ(270deg);
+    }
+
+    .sk-folding-cube .sk-cube2:before {
+        -webkit-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+    }
+
+    .sk-folding-cube .sk-cube3:before {
+        -webkit-animation-delay: 0.6s;
+        animation-delay: 0.6s;
+    }
+
+    .sk-folding-cube .sk-cube4:before {
+        -webkit-animation-delay: 0.9s;
+        animation-delay: 0.9s;
+    }
+
+@-webkit-keyframes sk-foldCubeAngle {
+    0%, 10% {
+        -webkit-transform: perspective(140px) rotateX(-180deg);
+        transform: perspective(140px) rotateX(-180deg);
+        opacity: 0;
+    }
+
+    25%, 75% {
+        -webkit-transform: perspective(140px) rotateX(0deg);
+        transform: perspective(140px) rotateX(0deg);
+        opacity: 1;
+    }
+
+    90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes sk-foldCubeAngle {
+    0%, 10% {
+        -webkit-transform: perspective(140px) rotateX(-180deg);
+        transform: perspective(140px) rotateX(-180deg);
+        opacity: 0;
+    }
+
+    25%, 75% {
+        -webkit-transform: perspective(140px) rotateX(0deg);
+        transform: perspective(140px) rotateX(0deg);
+        opacity: 1;
+    }
+
+    90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+    }
 }
