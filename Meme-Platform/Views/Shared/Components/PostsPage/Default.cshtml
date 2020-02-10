@@ -8,11 +8,11 @@
     var userVote = post.Votes.FirstOrDefault(v => v.Voter.ADIdentifier == User.Identity.Name);
     var hasUserVoted = userVote != null;
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title"><a href="/Posts/View/@(post.Id)">@post.Title</a></h3>
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h3 class="card-title"><a class="text-white" href="/Posts/View/@(post.Id)">@post.Title</a></h3>
         </div>
-        <div class="panel-body post-panel-body">
+        <div class="card-body post-panel-body">
             @if (post.Content.ContentType == ContentType.Image)
             {
                 <div class="post-content-wrapper">
@@ -45,40 +45,36 @@
             }
             else
             {
+                <h1>Eyyy, gotta implement that aint we?</h1>
                 @*<text>@Html.Raw(post.YouTubeLink)</text>*@
             }
         </div>
-        <div class="panel-footer">
-            @*<div>
-                    <span class="text-info text">Score: <span id="score-@(post.Id)">@post.CalculateScore()</span></span>
-                </div>*@
+        <div class="card-footer bg-dark">
             <div class="btn-group" role="group">
                 <span class="btn btn-default btn-group-label">
-                    Points <span id="score-@(post.Id)" class="badge">@post.CalculateScore()</span>
+                    Points <span id="score-@(post.Id)" class="badge badge-light">@post.CalculateScore()</span>
                 </span>
                 <button onclick="vote(@(post.Id), 1)"
                         data-unvote="@(hasUserVoted)"
                         id="upvote-@(post.Id)"
-                        class="btn
-                                    @(hasUserVoted && (int)userVote.Type > 0 ? "btn-success" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
-                    <span class="glyphicon glyphicon-arrow-up"></span>
+                        class="btn @(hasUserVoted && (int)userVote.Type > 0 ? "btn-success" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                    <span class="fas fa-arrow-up"></span>
                 </button>
                 <button onclick="vote(@(post.Id), -1)"
                         data-unvote="@(hasUserVoted)"
                         id="downvote-@(post.Id)"
-                        class="btn
-                                    @(hasUserVoted && (int)userVote.Type < 0 ? "btn-danger" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
-                    <span class="glyphicon glyphicon-arrow-down"></span>
+                        class="btn @(hasUserVoted && (int)userVote.Type < 0 ? "btn-danger" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                    <span class="fas fa-arrow-down"></span>
                 </button>
                 <button class="btn @(post.AnyNewComments() ? "btn-success" : "btn-primary")"
                         onclick="window.location.href = '/Posts/View/@(post.Id)';">
-                    <i class="glyphicon glyphicon-comment"></i>
-                    <span class="badge">@(post.CountComments())</span>
+                    <i class="fas fa-comment"></i>
+                    <span class="badge badge-light">@(post.CountComments())</span>
                 </button>
             </div>
 
-            <span class="pull-right text-info">
-                <i class="glyphicon glyphicon-calendar"></i><span>@post.DateCreated.ToString("d")</span>
+            <span class="float-right text-info">
+                <i class="fas fa-calendar"></i> <span>@post.DateCreated.ToString("d")</span>
             </span>
         </div>
     </div>

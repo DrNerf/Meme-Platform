@@ -1,0 +1,50 @@
+﻿@-webkit-keyframes MOVE-BG {
+    from {
+        -webkit-transform: translateX(0);
+    }
+
+    to {
+        -webkit-transform: translateX(46px);
+    }
+}
+
+@keyframes MOVE-BG {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(46px);
+    }
+}
+
+
+.loading {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: #df691a;
+    position: absolute;
+    overflow: hidden;
+    padding: 1rem;
+    font-style: italic;
+}
+
+.bg {
+    position: absolute;
+    left: -46px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    background: -webkit-repeating-linear-gradient( 145deg, #4e5d6c 1px, #2b3e50 2px, #2b3e50 11px, #4e5d6c 12px, #4e5d6c 20px );
+    background: repeating-linear-gradient( -55deg, #4e5d6c 1px, #2b3e50 2px, #2b3e50 11px, #4e5d6c 12px, #4e5d6c 20px );
+    -webkit-animation-name: MOVE-BG;
+    -webkit-animation-duration: .6s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: MOVE-BG;
+    animation-duration: .6s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
