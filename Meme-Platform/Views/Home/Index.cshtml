@@ -94,3 +94,42 @@
         </div>
     </div>
 </div>
+
+
+@section scripts{
+    <script src="~/js/voting-functions.js"></script>
+    <script src="~/js/posts-loader.js"></script>
+
+    <script>
+        $(function () {
+            $(".nsfw-overlay").on("click", function () {
+                $(this).slideUp();
+            });
+
+            $(".toggle-nsfw").on("click", function () {
+                var postId = $(this).attr('data-id');
+                var requestData = {
+                    postId: postId
+                };
+
+                if (postId) {
+                    $.post('@Url.Action("ToggleNSFW", "Posts")', requestData, function (data) {
+                        if (data.isSuccess) {
+                            if (data.response) {
+                                toastr["success"]("Post is now NSFW.", "Success");
+                            } else {
+                                toastr["success"]("Post is no longer NSFW.", "Success");
+                            }
+                        } else {
+                            toastr["error"]("Server error!", "WTF");
+                        }
+                    }).error(function () {
+                        toastr["error"]("Server error!", "WTF");
+                    });
+                } else {
+                    toastr["error"]("Can't locate post Id!", "WTF");
+                }
+            });
+        });
+    </script>
+}
