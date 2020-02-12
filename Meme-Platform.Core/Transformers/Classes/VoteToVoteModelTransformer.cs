@@ -35,7 +35,7 @@ namespace Meme_Platform.Core.Transformers.Classes
                 case VoteType.Down:
                     return Models.VoteType.Down;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(voteType), "Ey yo WTF!");
+                    throw new ArgumentException("Ey yo WTF!", nameof(voteType));
             }
         }
     }

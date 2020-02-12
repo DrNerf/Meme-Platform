@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Meme_Platform.Attributes;
+using Meme_Platform.Core.Models;
 using Meme_Platform.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -48,11 +49,24 @@ namespace Meme_Platform.Controllers
             }
 
             // Don't await so we dont slow down the upload.
-            // TODO: fix
-            //NotifySubscribedUsersForNewPost();
+            // TODO: fix slack hook
             //SlackHelper.SendNotification(dbPost, GetCurrentWebsiteRoot());
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Unvote(int id)
+        {
+            await postService.Unvote(id, User.Identity.Name);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Vote(int id, VoteType voteType)
+        {
+            await postService.Vote(id, User.Identity.Name, voteType);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

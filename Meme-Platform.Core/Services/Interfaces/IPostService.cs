@@ -18,5 +18,9 @@ namespace Meme_Platform.Core.Services.Interfaces
         IEnumerable<PostModel> GetTopPosts();
 
         IEnumerable<ProfileModel> GetTopContributors();
+
+        Task Unvote(int postId, string voterIdentifier);
+
+        Task Vote(int postId, string voterIdentifier, VoteType voteType);
     }
 }

@@ -1,6 +1,5 @@
-﻿var upVoteUrl = "/Posts/Vote";
-var unvoteUrl = "/Posts/Unvote";
-var isInChitChatMode = false;
+﻿var upVoteUrl = "/Posts/Vote/";
+var unvoteUrl = "/Posts/Unvote/";
 
 function vote(postId, type) {
     var isUpvote = type > 0;
@@ -12,56 +11,31 @@ function vote(postId, type) {
     var twinButton = $('#' + (!isUpvote ? 'upvote-' : 'downvote-') + postId);
     var isUnvote = button.attr('data-unvote').toLowerCase() == 'true';
     var voteUrl = isUnvote ? unvoteUrl : upVoteUrl;
-    var data = {
-        postId: postId,
-        chitChatId: postId,
-        voteType: type
-    };
 
-    $.post(voteUrl, data);
+    $.post(voteUrl + postId, { voteType: type });
 
-    if (isInChitChatMode) {
-        if (!isUnvote) {
-            button.removeClass('btn-danger');
-            button.removeClass('btn-success');
-            button.addClass('btn-primary');
+    if (!isUnvote) {
+        button.removeClass('btn-primary');
+        if (isUpvote) {
+            button.addClass('btn-success');
             twinButton.addClass('disabled');
-            button.attr('data-unvote', 'True');
         } else {
+            button.addClass('btn-danger');
+            twinButton.addClass('disabled');
+        }
+        button.attr('data-unvote', 'True');
+
+    } else {
+        if (isUpvote) {
             button.removeClass('btn-success');
             twinButton.removeClass('disabled');
-            if (isUpvote) {
-                button.addClass('btn-success');
-            } else {
-                button.addClass('btn-danger');
-            }
-            button.attr('data-unvote', 'False');
-            twinButton.attr('data-unvote', 'False');
-        }
-    } else {
-        if (!isUnvote) {
-            button.removeClass('btn-primary');
-            if (isUpvote) {
-                button.addClass('btn-success');
-                twinButton.addClass('disabled');
-            } else {
-                button.addClass('btn-danger');
-                twinButton.addClass('disabled');
-            }
-            button.attr('data-unvote', 'True');
-
         } else {
-            if (isUpvote) {
-                button.removeClass('btn-success');
-                twinButton.removeClass('disabled');
-            } else {
-                button.removeClass('btn-danger');
-                twinButton.removeClass('disabled');
-            }
-            button.addClass('btn-primary');
-            button.attr('data-unvote', 'False');
-            twinButton.attr('data-unvote', 'False');
+            button.removeClass('btn-danger');
+            twinButton.removeClass('disabled');
         }
+        button.addClass('btn-primary');
+        button.attr('data-unvote', 'False');
+        twinButton.attr('data-unvote', 'False');
     }
 
 

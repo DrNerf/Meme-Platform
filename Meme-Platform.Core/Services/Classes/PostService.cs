@@ -1,4 +1,5 @@
-﻿using Meme_Platform.Core.Models;
+﻿using Meme_Platform.Core.Exceptions;
+using Meme_Platform.Core.Models;
 using Meme_Platform.Core.Services.Interfaces;
 using Meme_Platform.Core.Transformers.Interfaces;
 using Meme_Platform.DAL;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Meme_Platform.Core.Services.Classes
 {
-    internal class PostService : IPostService
+    internal class PostService : ServiceBase, IPostService
     {
         private readonly IRepository<Post> postRepository;
         private readonly IRepository<Content> contentRepository;
@@ -20,6 +21,7 @@ namespace Meme_Platform.Core.Services.Classes
         private readonly ICollectionTransformer<Post, PostModel> postsTransformer;
         private readonly IRepository<PostOfTheDay> postOfTheDayRepository;
         private readonly ICollectionTransformer<Profile, ProfileModel> profilesTransformer;
+        private readonly IRepository<Vote> voteRepository;
         private readonly CoreConfig coreConfig;
 
         public PostService(
@@ -30,7 +32,8 @@ namespace Meme_Platform.Core.Services.Classes
             ICollectionTransformer<Post, PostModel> postsTransformer,
             IRepository<PostOfTheDay> postOfTheDayRepository,
             ICollectionTransformer<Profile, ProfileModel> profilesTransformer,
-            CoreConfig coreConfig)
+            IRepository<Vote> voteRepository,
+            CoreConfig coreConfig) : base(profileRepository)
         {
             this.postRepository = postRepository;
             this.contentRepository = contentRepository;
@@ -39,6 +42,7 @@ namespace Meme_Platform.Core.Services.Classes
             this.postsTransformer = postsTransformer;
             this.postOfTheDayRepository = postOfTheDayRepository;
             this.profilesTransformer = profilesTransformer;
+            this.voteRepository = voteRepository;
             this.coreConfig = coreConfig;
         }
 
@@ -123,11 +127,46 @@ namespace Meme_Platform.Core.Services.Classes
                 .ToList());
         }
 
+        public Task Unvote(int postId, string voterIdentifier)
+        {
+            var vote = voteRepository.Get()
+                .Where(v => v.Post.Id == postId)
+                .FirstOrDefault(v => v.Voter.ADIdentifier == voterIdentifier);
+
+            if (vote != null)
+            {
+                voteRepository.Delete(vote);
+                return voteRepository.SaveChangesAsync();
+            }
+
+            throw new DisplayException("Failed to remove your previous vote!");
+        }
+
+        public Task Vote(int postId, string voterIdentifier, Models.VoteType voteType)
+        {
+            var voter = GetProfile(voterIdentifier);
+            var post = postRepository.Get().First(p => p.Id == postId);
+            if (!post.Votes.Any(v => v.Voter.Id == voter.Id))
+            {
+                var vote = new Vote 
+                {
+                    Post = post,
+                    Type = (DAL.Entities.VoteType)((int)voteType),
+                    Voter = voter,
+                };
+                post.Votes.Add(vote);
+                return postRepository.SaveChangesAsync();
+            }
+
+            throw new DisplayException("Failed to save your vote!");
+        }
+
         public void Dispose()
         {
             postRepository?.Dispose();
             contentRepository?.Dispose();
             profileRepository?.Dispose();
+            voteRepository?.Dispose();
         }
     }
 }
