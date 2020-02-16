@@ -25,16 +25,10 @@ textarea {
 .post-image {
     width: 100%;
     margin: 0px;
-    transition: transform .2s;
-}
-
-.post-content-wrapper > a > .post-image:hover {
-    transform: scale(1.1);
 }
 
 .post-row {
     border-bottom: 1px solid #dadada;
-    /*position: relative;*/
 }
 
 .text-editor {

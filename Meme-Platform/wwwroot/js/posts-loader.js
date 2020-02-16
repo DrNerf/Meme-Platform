@@ -33,7 +33,7 @@ PostsLoader = {
                 }
             }
         }).each(function () {
-            if (this.complete) $(this).load();
+            if (this.complete) $(this).trigger('load');
         });
     },
     listenForNextLoad: function () {
