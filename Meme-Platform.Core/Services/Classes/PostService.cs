@@ -161,6 +161,12 @@ namespace Meme_Platform.Core.Services.Classes
             throw new DisplayException("Failed to save your vote!");
         }
 
+        public PostModel GetPost(int id)
+        {
+            var post = postRepository.Get().FirstOrDefault(post => post.Id == id);
+            return post != null ? postTransformer.Transform(post) : null;
+        }
+
         public void Dispose()
         {
             postRepository?.Dispose();

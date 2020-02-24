@@ -29,6 +29,17 @@ namespace Meme_Platform.Controllers
             return View();
         }
 
+        public IActionResult View(int id)
+        {
+            var post = postService.GetPost(id);
+            if (post != null)
+            {
+                return View(post); 
+            }
+
+            return NotFound();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Upload(
             string title,

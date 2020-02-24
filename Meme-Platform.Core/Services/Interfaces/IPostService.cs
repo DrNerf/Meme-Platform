@@ -22,5 +22,6 @@ namespace Meme_Platform.Core.Services.Interfaces
         Task Unvote(int postId, string voterIdentifier);
 
         Task Vote(int postId, string voterIdentifier, VoteType voteType);
+        PostModel GetPost(int id);
     }
 }

@@ -1,0 +1,271 @@
+﻿@using Meme_Platform.Core.Models
+@using Meme_Platform.Extensions
+@model Meme_Platform.Core.Models.PostModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+@section styles {
+    <link href="~/css/comments.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="col-lg-10">
+        <div class="card">
+            @{
+                var userVote = Model.Votes.FirstOrDefault(v => v.Voter.ADIdentifier == User.Identity.Name);
+                var hasUserVoted = userVote != null;
+            }
+            <div class="card-header bg-primary">
+                <h3 class="panel-title">@Model.Title</h3>
+            </div>
+            <div class="card-body post-panel-body">
+                @if (Model.Content.ContentType == ContentType.Image)
+                {
+                    <img src="@Model.Content.GetImageUrl()" class="post-image" />
+                }
+                else
+                {
+                    @*Oy youtube vids aint gon work like that
+                    <text>@Html.Raw(Model.YouTubeLink)</text>*@
+                }
+            </div>
+            <div class="card-footer bg-dark">
+                <div class="btn-group" role="group">
+                    <span class="btn btn-default btn-group-label">
+                        Points <span id="score-@(Model.Id)" class="badge">@Model.CalculateScore()</span>
+                    </span>
+                    <button onclick="vote(@(Model.Id), 1)"
+                            data-unvote="@(hasUserVoted)"
+                            id="upvote-@(Model.Id)"
+                            class="btn
+                                    @(hasUserVoted && (int)userVote.Type > 0 ? "btn-success" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                        <span class="fa fa-arrow-up"></span>
+                    </button>
+                    <button onclick="vote(@(Model.Id), -1)"
+                            data-unvote="@(hasUserVoted)"
+                            id="downvote-@(Model.Id)"
+                            class="btn
+                                    @(hasUserVoted && (int)userVote.Type < 0 ? "btn-danger" : hasUserVoted ? "disabled btn-primary" : "btn-primary")">
+                        <span class="fa fa-arrow-down"></span>
+                    </button>
+                </div>
+                <span class="float-right text-info">
+                    <i class="fa fa-calendar"></i>&nbsp;<span>@Model.DateCreated.GetDateString()</span>
+                    &nbsp;
+                    <i class="fa fa-clock"></i>&nbsp;<span>@Model.DateCreated.GetTimeString()</span>
+                </span>
+            </div>
+        </div>
+        <div class="comment_block">
+            <div class="create_new_comment">
+                <div class="user_avatar">
+                    <img src="/Profile/Avatar">
+                </div>
+                <div class="input_comment">
+                    <div class="input-group">
+                        <input id="post-comment" type="text" class="form-control" placeholder="Give em' some hate! (ノಠ益ಠ)ノ彡┻━┻">
+                        <div class="input-group-append">
+                            <button id="send-post-comment" data-id="@Model.Id" class="btn btn-primary" type="button">
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="new_comment clearfix">
+                    <ul class="user_comment">
+                        <div class="user_avatar">
+                            <img src="@Url.Content(comment.Owner.ProfilePictureUrl)">
+                        </div>
+                        <div class="comment_body">
+                            <p>@(Html.Raw(comment.Text))</p>
+                        </div>
+                        <div class="comment_toolbar">
+                            <div class="comment_details">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-user"></i>
+                                        @if (Model.Owner.ADIdentifier == comment.Owner.ADIdentifier)
+                                        {
+                                            <span class="label label-success op" data-toggle="tooltip" data-placement="top" title="That's the OP right there!">
+                                                @comment.Owner.Nickname
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="user">@comment.Owner.Nickname</span>
+                                        }
+                                    </li>
+                                    <li><i class="fa fa-calendar"></i>@comment.DateTimePosted.GetDateString()</li>
+                                    <li><i class="fa fa-time"></i>@comment.DateTimePosted.GetTimeString()</li>
+                                </ul>
+                            </div>
+                            <div class="comment_tools">
+                                <ul>
+                                    <li class="reply_button" data-toggle="modal" data-target="#reply-modal" onclick="selectComment(@comment.Id);">
+                                        <i class="fa fa-comment"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        @foreach (var reply in comment.Comments)
+                        {
+                            <li>
+                                <div class="user_avatar">
+                                    <img src="@Url.Content(reply.Owner.ProfilePictureUrl)">
+                                </div>
+                                <div class="comment_body">
+                                    <p>@(Html.Raw(reply.Text))</p>
+                                </div>
+                                <div class="comment_toolbar">
+                                    <div class="comment_details">
+                                        <ul>
+                                            <li>
+                                                <i class="fa fa-user"></i>
+                                                @if (Model.Owner.ADIdentifier == reply.Owner.ADIdentifier)
+                                                {
+                                                    <span class="label label-success op" data-toggle="tooltip" data-placement="top" title="That's the OP right there!">
+                                                        @reply.Owner.Nickname
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="user">@reply.Owner.Nickname</span>
+                                                }
+                                            </li>
+                                            <li><i class="fa fa-calendar"></i>@reply.DateTimePosted.GetDateString()</li>
+                                            <li><i class="fa fa-time"></i>@reply.DateTimePosted.GetTimeString()</li>
+                                        </ul>
+                                    </div>
+                                    <div class="comment_tools">
+                                        <ul>
+                                            @*<li><i class="fa fa-comment"></i></li>*@
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" aria-labelledby="Reply">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Reply</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="reply-text" placeholder="Spit some fire! (ง'̀-'́)ง" class="text-editor form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input id="save-reply" onclick="sendReply();" type="button" class="btn btn-primary" value="Reply" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/voting-functions.js"></script>
+    <script>
+        var selectedCommentId;
+        function selectComment(id) {
+            selectedCommentId = id;
+        }
+
+        function sendReply() {
+            var button = $('#send-reply');
+            button.addClass('disabled');
+            var commentId = selectedCommentId;
+            var comment = $('#reply-text').val();
+            var data = {
+                replyText: comment,
+                commentId: commentId
+            };
+
+            $.post('/Posts/Reply', data, function (data) {
+                if (data.IsSuccess) {
+                    location.reload();
+                }
+                else {
+                    alert("Whoops, something went wrong.¯\_(ツ)_/¯");
+                }
+                button.removeClass('disabled');
+            }).error(function () {
+                alert("Whoops, something went wrong.¯\_(ツ)_/¯");
+                button.removeClass('disabled');
+            });
+        }
+
+        $(function () {
+            //$('[data-toggle="tooltip"]').tooltip();
+
+            $('#send-post-comment').click(function () {
+                var button = $('#send-post-comment');
+                button.addClass('disabled');
+                var Id = button.attr('data-id');
+                var comment = $('#post-comment').val();
+                var data = {
+                    commentText: comment,
+                    Id: Id
+                };
+
+                if (true) { //shhhh... no tears, just sweet dreams!( ͡° ͜ʖ ͡°)
+                    $.post('/Posts/Comment', data, function (data) {
+                        if (data.IsSuccess) {
+                            location.reload();
+                        }
+                        else {
+                            alert("Whoops, something went wrong.¯\_(ツ)_/¯");
+                        }
+                        button.removeClass('disabled');
+                    }).error(function () {
+                        alert("Whoops, something went wrong.¯\_(ツ)_/¯");
+                        button.removeClass('disabled');
+                    });
+                }
+                else {
+                    button.removeClass('disabled');
+                }
+            });
+
+            $('#post-comment').bind('input propertychange', function () {
+                var value = $('#post-comment').val();
+                var icon = $('#send-post-comment-icon');
+                if (isTextImageUrl(value)) {
+                    icon.removeClass('fa-send');
+                    icon.addClass('fa-picture');
+                }
+                else {
+                    icon.removeClass('fa-picture');
+                    icon.addClass('fa-send');
+                }
+            });
+
+            $('#reply-text').bind('input propertychange', function () {
+                var value = $(this).val();
+                var button = $('#save-reply');
+                if (isTextImageUrl(value)) {
+                    button.val('ʕ•ᴥ•ʔ');
+                }
+                else {
+                    button.val('Reply'); //shhhh
+                }
+            });
+        });
+
+        function isTextImageUrl(url) {
+            return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+        }
+    </script>
+}

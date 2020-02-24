@@ -53,6 +53,7 @@ namespace Meme_Platform
 
             // Register MVC services.
             services.AddTransient<ManageUserProfilesFilter>();
+            services.AddTransient<DependencyInjectorFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -26,7 +26,8 @@ namespace Meme_Platform.Core.Transformers.Classes
                 Owner = profileTransformer.Transform(source.Owner),
                 Text = source.Text,
                 Parent = source.Parent != null ? Transform(source.Parent) : null,
-                Comments = source.Comments.Select(c => Transform(c)).ToList()
+                Comments = source.Comments.Select(c => Transform(c)).ToList(),
+                Id = source.Id
             };
         }
     }
