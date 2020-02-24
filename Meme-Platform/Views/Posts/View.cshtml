@@ -33,7 +33,7 @@
             <div class="card-footer bg-dark">
                 <div class="btn-group" role="group">
                     <span class="btn btn-default btn-group-label">
-                        Points <span id="score-@(Model.Id)" class="badge">@Model.CalculateScore()</span>
+                        Points <span id="score-@(Model.Id)" class="badge badge-light">@Model.CalculateScore()</span>
                     </span>
                     <button onclick="vote(@(Model.Id), 1)"
                             data-unvote="@(hasUserVoted)"
@@ -88,7 +88,7 @@
                             <div class="comment_details">
                                 <ul>
                                     <li>
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-user"></i>&nbsp;
                                         @if (Model.Owner.ADIdentifier == comment.Owner.ADIdentifier)
                                         {
                                             <span class="label label-success op" data-toggle="tooltip" data-placement="top" title="That's the OP right there!">
@@ -100,8 +100,8 @@
                                             <span class="user">@comment.Owner.Nickname</span>
                                         }
                                     </li>
-                                    <li><i class="fa fa-calendar"></i>@comment.DateTimePosted.GetDateString()</li>
-                                    <li><i class="fa fa-time"></i>@comment.DateTimePosted.GetTimeString()</li>
+                                    <li><i class="fa fa-calendar"></i>&nbsp;@comment.DateTimePosted.GetDateString()</li>
+                                    <li><i class="fa fa-clock"></i>&nbsp;@comment.DateTimePosted.GetTimeString()</li>
                                 </ul>
                             </div>
                             <div class="comment_tools">
@@ -208,35 +208,33 @@
         }
 
         $(function () {
-            //$('[data-toggle="tooltip"]').tooltip();
-
             $('#send-post-comment').click(function () {
                 var button = $('#send-post-comment');
                 button.addClass('disabled');
                 var Id = button.attr('data-id');
                 var comment = $('#post-comment').val();
-                var data = {
-                    commentText: comment,
-                    Id: Id
+                if (!comment) {
+                    button.removeClass('disabled');
+                    return;
+                }
+
+                var params = {
+                    message: comment,
+                    id: Id
                 };
 
-                if (true) { //shhhh... no tears, just sweet dreams!( ͡° ͜ʖ ͡°)
-                    $.post('/Posts/Comment', data, function (data) {
-                        if (data.IsSuccess) {
-                            location.reload();
-                        }
-                        else {
-                            alert("Whoops, something went wrong.¯\_(ツ)_/¯");
-                        }
-                        button.removeClass('disabled');
-                    }).error(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Posts/Comment',
+                    data: params,
+                    success: function (data) {
+                        location.reload();
+                    },
+                    error: function () {
                         alert("Whoops, something went wrong.¯\_(ツ)_/¯");
                         button.removeClass('disabled');
-                    });
-                }
-                else {
-                    button.removeClass('disabled');
-                }
+                    }
+                });
             });
 
             $('#post-comment').bind('input propertychange', function () {

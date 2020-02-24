@@ -13,9 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Meme_Platform.Controllers
 {
-    [Authorize]
-    [ServiceFilter(typeof(ManageUserProfilesFilter))]
-    public class PostsController : Controller
+    public class PostsController : ControllerBase
     {
         private readonly IPostService postService;
 
@@ -38,6 +36,12 @@ namespace Meme_Platform.Controllers
             }
 
             return NotFound();
+        }
+
+        public async Task<IActionResult> Comment(int id, string message)
+        {
+            await postService.Comment(id, message, User.Identity.Name);
+            return Ok();
         }
 
         [HttpPost]

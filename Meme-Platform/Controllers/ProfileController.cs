@@ -1,5 +1,4 @@
 ﻿using Meme_Platform.Attributes;
-using Meme_Platform.Core.Attributes;
 using Meme_Platform.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ namespace Meme_Platform.Controllers
     public class ProfileController : ControllerBase
     {
         [Inject]
-        private IProfileService profileService;
+        private readonly IProfileService profileService;
 
         [HttpGet]
         public IActionResult Avatar()
