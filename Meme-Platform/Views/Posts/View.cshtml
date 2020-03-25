@@ -129,7 +129,7 @@
                                                 <i class="fa fa-user"></i>
                                                 @if (Model.Owner.ADIdentifier == reply.Owner.ADIdentifier)
                                                 {
-                                                    <span class="label label-success op" data-toggle="tooltip" data-placement="top" title="That's the OP right there!">
+                                                    <span class="badge badge-primary op" data-toggle="tooltip" data-placement="top" title="That's the OP right there!">
                                                         @reply.Owner.Nickname
                                                     </span>
                                                 }
@@ -138,8 +138,8 @@
                                                     <span class="user">@reply.Owner.Nickname</span>
                                                 }
                                             </li>
-                                            <li><i class="fa fa-calendar"></i>@reply.DateTimePosted.GetDateString()</li>
-                                            <li><i class="fa fa-time"></i>@reply.DateTimePosted.GetTimeString()</li>
+                                            <li><i class="fa fa-calendar"></i>&nbsp;@reply.DateTimePosted.GetDateString()</li>
+                                            <li><i class="fa fa-clock"></i>&nbsp;@reply.DateTimePosted.GetTimeString()</li>
                                         </ul>
                                     </div>
                                     <div class="comment_tools">
@@ -161,8 +161,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Reply to comment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Reply</h4>
             </div>
             <div class="modal-body">
                 <textarea id="reply-text" placeholder="Spit some fire! (ง'̀-'́)ง" class="text-editor form-control"></textarea>
@@ -188,22 +188,22 @@
             button.addClass('disabled');
             var commentId = selectedCommentId;
             var comment = $('#reply-text').val();
-            var data = {
-                replyText: comment,
+            var params = {
+                message: comment,
                 commentId: commentId
             };
 
-            $.post('/Posts/Reply', data, function (data) {
-                if (data.IsSuccess) {
+            $.ajax({
+                type: 'POST',
+                url: '/Posts/Reply',
+                data: params,
+                success: function () {
                     location.reload();
-                }
-                else {
+                },
+                error: function () {
                     alert("Whoops, something went wrong.¯\_(ツ)_/¯");
+                    button.removeClass('disabled');
                 }
-                button.removeClass('disabled');
-            }).error(function () {
-                alert("Whoops, something went wrong.¯\_(ツ)_/¯");
-                button.removeClass('disabled');
             });
         }
 

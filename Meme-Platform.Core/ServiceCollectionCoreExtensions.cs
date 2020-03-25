@@ -34,6 +34,7 @@ namespace Meme_Platform.Core
             services.AddService<IPostService, PostService>();
             services.AddService<IProfileService, ProfileService>();
             services.AddService<IContentService, ContentService>();
+            services.AddService<ICommentService, CommentService>();
         }
 
         private static void AddService<TInterface, TImpl>(this IServiceCollection services)

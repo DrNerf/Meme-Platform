@@ -24,7 +24,5 @@ namespace Meme_Platform.Core.Services.Interfaces
         Task Vote(int postId, string voterIdentifier, VoteType voteType);
 
         PostModel GetPost(int id);
-
-        Task Comment(int postId, string message, string ownerIdentifier);
     }
 }

@@ -15,12 +15,11 @@ namespace Meme_Platform.Controllers
 {
     public class PostsController : ControllerBase
     {
+        [Inject]
         private readonly IPostService postService;
 
-        public PostsController(IPostService postService)
-        {
-            this.postService = postService;
-        }
+        [Inject]
+        private readonly ICommentService commentService;
 
         public IActionResult Create()
         {
@@ -38,9 +37,17 @@ namespace Meme_Platform.Controllers
             return NotFound();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Comment(int id, string message)
         {
-            await postService.Comment(id, message, User.Identity.Name);
+            await commentService.Comment(id, message, User.Identity.Name);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Reply(int commentId, string message)
+        {
+            await commentService.Reply(commentId, message, User.Identity.Name);
             return Ok();
         }
 

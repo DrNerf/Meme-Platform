@@ -167,20 +167,6 @@ namespace Meme_Platform.Core.Services.Classes
             return post != null ? postTransformer.Transform(post) : null;
         }
 
-        public Task Comment(int postId, string message, string ownerIdentifier)
-        {
-            var owner = GetProfile(ownerIdentifier);
-            var post = postRepository.Get().First(p => p.Id == postId);
-            post.Comments.Add(new Comment 
-            {
-                DateTimePosted = DateTime.Now,
-                Owner = owner,
-                Text = message
-            });
-
-            return postRepository.SaveChangesAsync();
-        }
-
         public void Dispose()
         {
             postRepository?.Dispose();
