@@ -36,6 +36,11 @@ namespace Meme_Platform.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Posts(int page)
+        {
+            return ViewComponent("PostsPage", new { page });
+        }
+
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
