@@ -18,7 +18,7 @@
             <div class="sk-cube3 sk-cube"></div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 sidebar">
         <div>
             <a href="@Url.Action("Create", "Posts")"
                class="btn btn-primary btn-block">
@@ -29,9 +29,9 @@
         <br />
         @if (Model.PostOfTheDay != null)
         {
-            <div class="panel panel-default">
-                <div class="panel-heading">Post of the day:</div>
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-header">Post of the day:</div>
+                <div class="card-body">
                     <a href="/Posts/View/@(Model.PostOfTheDay.Id)">
                         @string.Format(
                             "{0} with {1} points!",
@@ -46,9 +46,9 @@
                 </div>
             </div>
         }
-        <div class="panel panel-default">
-            <div class="panel-heading">Top contributors:</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header">Top contributors:</div>
+            <div class="card-body">
                 <ul class="list-group">
                     @foreach (var contributor in Model.TopContributors)
                     {
@@ -60,36 +60,34 @@
                 </ul>
             </div>
         </div>
-        <div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Top posts:</div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        @foreach (var post in Model.TopPosts)
-                        {
-                            <li class="list-group-item">
+        <div class="card">
+            <div class="card-header">Top posts:</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    @foreach (var post in Model.TopPosts)
+                    {
+                        <li class="list-group-item">
+                            <a href="/Posts/View/@(post.Id)">
+                                @string.Format(
+                                    "{0} with {1} points!",
+                                    post.Title,
+                                    post.Votes.Sum(v => (int)v.Type))
+                            </a>
+                            <div class="post-preview">
                                 <a href="/Posts/View/@(post.Id)">
-                                    @string.Format(
-                                        "{0} with {1} points!",
-                                        post.Title,
-                                        post.Votes.Sum(v => (int)v.Type))
+                                    @if (post.Content.ContentType == ContentType.Image)
+                                    {
+                                        <img src="@(post.Content.GetImageUrl())" />
+                                    }
+                                    else
+                                    {
+                                        @*<img src="@(post.YouTubeLink.GetYoutubeThumbnail())" />*@
+                                    }
                                 </a>
-                                <div class="post-preview">
-                                    <a href="/Posts/View/@(post.Id)">
-                                        @if (post.Content.ContentType == ContentType.Image)
-                                        {
-                                            <img src="@(post.Content.GetImageUrl())" />
-                                        }
-                                        else
-                                        {
-                                            @*<img src="@(post.YouTubeLink.GetYoutubeThumbnail())" />*@
-                                        }
-                                    </a>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>

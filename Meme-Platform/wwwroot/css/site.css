@@ -378,3 +378,7 @@ pre {
         opacity: 0;
     }
 }
+
+.sidebar .card {
+    margin-bottom: 1em;
+}
