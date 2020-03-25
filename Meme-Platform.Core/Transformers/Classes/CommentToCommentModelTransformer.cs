@@ -25,7 +25,7 @@ namespace Meme_Platform.Core.Transformers.Classes
                 DateTimePosted = source.DateTimePosted,
                 Owner = profileTransformer.Transform(source.Owner),
                 Text = source.Text,
-                Parent = source.Parent != null ? Transform(source.Parent) : null,
+                //Parent = source.Parent != null ? Transform(source.Parent) : null, @ST Whoah there, nice SO exception.
                 Comments = source.Comments.Select(c => Transform(c)).ToList(),
                 Id = source.Id
             };
