@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Meme_Platform.Attributes;
 using Meme_Platform.Core.Models;
 using Meme_Platform.Core.Services.Interfaces;
+using Meme_Platform.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,22 +53,18 @@ namespace Meme_Platform.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(
-            string title,
-            IFormFile image,
-            string youTubeLink,
-            bool isNSFW)
+        public async Task<IActionResult> Upload(UploadRequest request)
         {
-            if (string.IsNullOrEmpty(title))
+            if (string.IsNullOrEmpty(request.Title))
             {
                 return BadRequest("Invalid input data!");
             }
 
             using (var stream = new MemoryStream())
             {
-                await image.CopyToAsync(stream);
-                var extension = Path.GetExtension(image.FileName);
-                await postService.PostImage(title, stream.ToArray(), extension, User.Identity.Name, isNSFW);
+                await request.Image.CopyToAsync(stream);
+                var extension = Path.GetExtension(request.Image.FileName);
+                await postService.PostImage(request.Title, stream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
             }
 
             // Don't await so we dont slow down the upload.
