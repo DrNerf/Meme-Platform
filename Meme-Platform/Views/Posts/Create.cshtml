@@ -7,11 +7,11 @@
     <div class="container-fluid">
         @using (Html.BeginForm("Upload", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="row">
+            <div class="form-group">
                 <input class="form-control" name="title" id="title" placeholder="Title:" />
             </div>
-            <div class="row">
-                <input type="file" name="image" class="input-files btn btn-default" id="file-input" />
+            <div class="form-group">
+                <input type="file" name="image" class="input-files btn btn-secondary" id="file-input" />
                 <input type="text"
                        name="youTubeLink"
                        style="display: none;"
@@ -19,19 +19,16 @@
                        id="youtube-input"
                        placeholder="YouTube video link..." />
             </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <input id="isNSFW" type="checkbox" value="true" name="isNSFW" />
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="isNSFW" name="isNSFW" value="true">
+                    <label class="custom-control-label" for="isNSFW">
+                        Not safe for work (Graphic content or nudity)
+                    </label>
                     <input type="hidden" value="false" name="isNSFW" />
                 </div>
-                <div class="col-md-10">
-                    <label for="isNSFW">
-                        Not safe for work <br />
-                        (Graphic content or nudity)
-                    </label>
-                </div>
             </div>
-            <div class="row">
+            <div class="form-group">
                 <button type="submit" name="button" class="btn btn-primary">
                     <span class="fa fa-upload"></span>
                     Upload

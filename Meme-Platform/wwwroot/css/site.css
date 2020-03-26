@@ -246,6 +246,7 @@ pre {
     z-index: 998;
     text-align: center;
     cursor: pointer;
+    padding: 1em;
 }
 
 .post-content-wrapper {
