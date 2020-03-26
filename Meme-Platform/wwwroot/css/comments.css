@@ -80,7 +80,8 @@
         font-size: 2rem;
         color: #ef4c3a;
         background-color: #485563;
-        border-bottom: 2px solid #ef4c3a;
+        border: 1px solid #ef4c3a;
+        border-radius: 0.25rem;
     }
 
         .comment_block .new_comment .comment_body .replied_to {
@@ -113,14 +114,13 @@
                 display: inline-block;
                 padding: 5px;
                 font-size: 1.5rem;
-                color: #d9d9d9;
             }
 
                 .comment_block .new_comment .comment_toolbar ul li:hover {
                 }
 
             .comment_block .new_comment .comment_toolbar ul .reply_button:hover {
-                color: #ef4c3a !important;
+                color: #2A9FD6 !important;
             }
 
             .comment_block .new_comment .comment_toolbar ul .reply_button {

@@ -17,7 +17,7 @@
                 var hasUserVoted = userVote != null;
             }
             <div class="card-header bg-primary">
-                <h3 class="panel-title">@Model.Title</h3>
+                <h3 class="panel-title text-white">@Model.Title</h3>
             </div>
             <div class="card-body post-panel-body">
                 @if (Model.Content.ContentType == ContentType.Image)
@@ -26,14 +26,13 @@
                 }
                 else
                 {
-                    @*Oy youtube vids aint gon work like that
-                    <text>@Html.Raw(Model.YouTubeLink)</text>*@
+                    <iframe frameborder="0" scrolling="no" type="text/html" src="https://www.youtube.com/embed/@(Model.Content.GetYTVideoId())"></iframe>
                 }
             </div>
-            <div class="card-footer bg-dark">
+            <div class="card-footer bg-light">
                 <div class="btn-group" role="group">
-                    <span class="btn btn-default btn-group-label">
-                        Points <span id="score-@(Model.Id)" class="badge badge-light">@Model.CalculateScore()</span>
+                    <span class="btn btn-secondary btn-group-label">
+                        Points <span id="score-@(Model.Id)" class="badge badge-dark">@Model.CalculateScore()</span>
                     </span>
                     <button onclick="vote(@(Model.Id), 1)"
                             data-unvote="@(hasUserVoted)"
@@ -50,7 +49,7 @@
                         <span class="fa fa-arrow-down"></span>
                     </button>
                 </div>
-                <span class="float-right text-info">
+                <span class="float-right text-secondary">
                     <i class="fa fa-calendar"></i>&nbsp;<span>@Model.DateCreated.GetDateString()</span>
                     &nbsp;
                     <i class="fa fa-clock"></i>&nbsp;<span>@Model.DateCreated.GetTimeString()</span>
@@ -81,8 +80,8 @@
                         <div class="user_avatar">
                             <img src="@Url.Content(comment.Owner.ProfilePictureUrl)">
                         </div>
-                        <div class="comment_body">
-                            <p>@(Html.Raw(comment.Text))</p>
+                        <div class="comment_body bg-secondary border-primary">
+                            <p class="text-primary">@(Html.Raw(comment.Text))</p>
                         </div>
                         <div class="comment_toolbar">
                             <div class="comment_details">
@@ -119,8 +118,8 @@
                                 <div class="user_avatar">
                                     <img src="@Url.Content(reply.Owner.ProfilePictureUrl)">
                                 </div>
-                                <div class="comment_body">
-                                    <p>@(Html.Raw(reply.Text))</p>
+                                <div class="comment_body bg-secondary border-primary">
+                                    <p class="text-primary">@(Html.Raw(reply.Text))</p>
                                 </div>
                                 <div class="comment_toolbar">
                                     <div class="comment_details">

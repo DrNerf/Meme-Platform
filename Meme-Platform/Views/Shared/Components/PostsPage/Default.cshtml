@@ -48,10 +48,10 @@
                 <iframe frameborder="0" scrolling="no" type="text/html" src="https://www.youtube.com/embed/@(post.Content.GetYTVideoId())"></iframe>
             }
         </div>
-        <div class="card-footer bg-dark">
+        <div class="card-footer bg-light">
             <div class="btn-group" role="group">
-                <span class="btn btn-default btn-group-label">
-                    Points <span id="score-@(post.Id)" class="badge badge-light">@post.CalculateScore()</span>
+                <span class="btn btn-secondary btn-group-label">
+                    Points <span id="score-@(post.Id)" class="badge badge-primary badge-pill">@post.CalculateScore()</span>
                 </span>
                 <button onclick="vote(@(post.Id), 1)"
                         data-unvote="@(hasUserVoted)"
@@ -68,11 +68,11 @@
                 <button class="btn @(post.AnyNewComments() ? "btn-success" : "btn-primary")"
                         onclick="window.location.href = '/Posts/View/@(post.Id)';">
                     <i class="fas fa-comment"></i>
-                    <span class="badge badge-light">@(post.CountComments())</span>
+                    <span class="badge badge-dark">@(post.CountComments())</span>
                 </button>
             </div>
 
-            <span class="float-right text-info">
+            <span class="float-right text-secondary">
                 <i class="fas fa-calendar"></i> <span>@post.DateCreated.ToString("d")</span>
             </span>
         </div>

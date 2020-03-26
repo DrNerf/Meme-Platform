@@ -48,7 +48,7 @@ textarea {
 }
 
 .comment-image {
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
     width: 80%;
     max-width: 300px !important;
 }
@@ -56,7 +56,7 @@ textarea {
 .person-image {
     max-height: 100px !important;
     max-width: 100px !important;
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
 }
 
 .person-name {
@@ -104,7 +104,7 @@ textarea {
     background: black;
     padding: 15px;
     font-family: 'Segoe Script';
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
 }
 
 .quote-author-img {
@@ -121,13 +121,13 @@ textarea {
 }
 
 pre {
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
 }
 
 .chat-container {
     height: 500px;
     overflow: auto;
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
     border-bottom: 0px;
     background: #4e5d6c;
     padding: 15px;
@@ -145,7 +145,7 @@ pre {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-    border: #ef4c3a solid 1px;
+    border: #2A9FD6 solid 1px;
     vertical-align: middle;
 }
 
@@ -167,7 +167,7 @@ pre {
         position: absolute;
         border-style: solid;
         border-width: 15px 0 15px 15px;
-        border-color: transparent #ef4c3a;
+        border-color: transparent #2A9FD6;
         display: block;
         width: 0;
         z-index: 0;
@@ -184,7 +184,7 @@ pre {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-    border: #ef4c3a solid 1px;
+    border: #2A9FD6 solid 1px;
 }
 
     .bubble-left:after {
@@ -205,7 +205,7 @@ pre {
         position: absolute;
         border-style: solid;
         border-width: 15px 15px 15px 0;
-        border-color: transparent #ef4c3a;
+        border-color: transparent #2A9FD6;
         display: block;
         width: 0;
         z-index: 0;
@@ -228,7 +228,7 @@ pre {
 .post-preview {
     height: 100px;
     overflow: hidden;
-    border: 1px solid #ef4c3a;
+    border: 1px solid #2A9FD6;
 }
 
     .post-preview img {
@@ -241,7 +241,7 @@ pre {
     left: 0px;
     width: 100%;
     height: 100%;
-    border: 2px solid #ef4c3a;
+    border: 2px solid #2A9FD6;
     background-color: #2b3e50;
     z-index: 998;
     text-align: center;
@@ -271,7 +271,7 @@ pre {
 }
 
 .loading-overlay {
-    /*background-color: #ef4c3a;*/
+    /*background-color: #2A9FD6;*/
     position: absolute;
     top: 0px;
     left: 0px;
@@ -280,7 +280,7 @@ pre {
     z-index: 997;
     text-align: center;
     cursor: progress;
-    border: 2px solid #ef4c3a;
+    border: 2px solid #2A9FD6;
 }
 
 .sk-folding-cube {
@@ -309,7 +309,7 @@ pre {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ef4c3a;
+            background-color: #2A9FD6;
             -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
             animation: sk-foldCubeAngle 2.4s infinite linear both;
             -webkit-transform-origin: 100% 100%;
