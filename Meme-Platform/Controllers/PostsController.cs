@@ -60,11 +60,22 @@ namespace Meme_Platform.Controllers
                 return BadRequest("Invalid input data!");
             }
 
-            using (var stream = new MemoryStream())
+            if (request.Image != null)
             {
-                await request.Image.CopyToAsync(stream);
-                var extension = Path.GetExtension(request.Image.FileName);
-                await postService.PostImage(request.Title, stream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
+                using (var stream = new MemoryStream())
+                {
+                    await request.Image.CopyToAsync(stream);
+                    var extension = Path.GetExtension(request.Image.FileName);
+                    await postService.PostImage(request.Title, stream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
+                }
+            }
+            else if (!string.IsNullOrEmpty(request.youTubeLink))
+            {
+                await postService.PostYTVideo(request.Title, request.youTubeLink, User.Identity.Name, request.IsNSFW);
+            }
+            else
+            {
+                return BadRequest();
             }
 
             // Don't await so we dont slow down the upload.

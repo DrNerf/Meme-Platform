@@ -45,8 +45,7 @@
             }
             else
             {
-                <h1>Eyyy, gotta implement that aint we?</h1>
-                @*<text>@Html.Raw(post.YouTubeLink)</text>*@
+                <iframe frameborder="0" scrolling="no" type="text/html" src="https://www.youtube.com/embed/@(post.Content.GetYTVideoId())"></iframe>
             }
         </div>
         <div class="card-footer bg-dark">

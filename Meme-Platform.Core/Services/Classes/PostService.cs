@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Meme_Platform.Core.Services.Classes
@@ -69,11 +70,6 @@ namespace Meme_Platform.Core.Services.Classes
             post.Votes.Add(new Vote { Post = post, Type = DAL.Entities.VoteType.Up, Voter = owner });
             await postRepository.SaveChangesAsync();
             return postTransformer.Transform(post);
-        }
-
-        public Task<PostModel> PostYoutubeVideo(string title, byte[] data)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<PostModel> GetPostsPage(int page)
@@ -165,6 +161,29 @@ namespace Meme_Platform.Core.Services.Classes
         {
             var post = postRepository.Get().FirstOrDefault(post => post.Id == id);
             return post != null ? postTransformer.Transform(post) : null;
+        }
+
+        public async Task<PostModel> PostYTVideo(string title, string videoUrl, string ownerIdentifier, bool isNsfw)
+        {
+            var owner = GetProfile(ownerIdentifier);
+            var content = contentRepository.Add(new Content
+            {
+                ContentType = DAL.Entities.ContentType.Youtube,
+                Data = Encoding.UTF8.GetBytes(videoUrl),
+            });
+
+            var post = postRepository.Add(new Post
+            {
+                Title = title,
+                Content = content,
+                IsNSFW = isNsfw,
+                DateCreated = DateTime.Now,
+                Owner = owner
+            });
+
+            post.Votes.Add(new Vote { Post = post, Type = DAL.Entities.VoteType.Up, Voter = owner });
+            await postRepository.SaveChangesAsync();
+            return postTransformer.Transform(post);
         }
 
         public void Dispose()

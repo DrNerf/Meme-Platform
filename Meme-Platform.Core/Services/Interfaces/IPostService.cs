@@ -9,7 +9,8 @@ namespace Meme_Platform.Core.Services.Interfaces
         Task<PostModel> PostImage(string title, byte[] data, string extension,
             string ownerIdentifier, bool isNsfw);
 
-        Task<PostModel> PostYoutubeVideo(string title, byte[] data);
+        Task<PostModel> PostYTVideo(string title, string videoUrl, string ownerIdentifier,
+            bool isNsfw);
 
         IEnumerable<PostModel> GetPostsPage(int page);
 

@@ -260,6 +260,14 @@ pre {
 
 .post-panel-body {
     padding: 0px !important;
+
+    /*Some funky spacing appear at the bottom of the container without this.*/
+    line-height: 0px;
+}
+
+.post-panel-body iframe {
+    width: 100%;
+    height: 500px;
 }
 
 .loading-overlay {
