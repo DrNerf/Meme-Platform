@@ -9,9 +9,9 @@
     var hasUserVoted = userVote != null;
 
     <div class="card">
-        <div class="card-header bg-primary">
-            <h3 class="card-title"><a class="text-white" href="/Posts/View/@(post.Id)">@post.Title</a></h3>
-        </div>
+        <h5 class="card-header bg-primary">
+            <a class="text-white" href="/Posts/View/@(post.Id)">@post.Title</a>
+        </h5>
         <div class="card-body post-panel-body">
             @if (post.Content.ContentType == ContentType.Image)
             {

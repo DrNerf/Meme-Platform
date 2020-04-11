@@ -392,3 +392,7 @@ pre {
 .sidebar .card {
     margin-bottom: 1em;
 }
+
+.navbar-brand {
+    padding: 0px;
+}

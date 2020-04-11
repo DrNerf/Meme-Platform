@@ -49,6 +49,7 @@ namespace Meme_Platform
             }
 
             // Registers all inhouse services including DAL repos.
+            services.AddSingleton<UIConfig>();
             services.Bootstrap(Configuration);
 
             // Register MVC services.
