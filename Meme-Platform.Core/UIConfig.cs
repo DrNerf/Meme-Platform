@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Meme_Platform
+namespace Meme_Platform.Core
 {
     public class UIConfig
     {

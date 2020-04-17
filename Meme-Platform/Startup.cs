@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Meme_Platform.Attributes;
 using Meme_Platform.Core;
+using Meme_Platform.IL;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IO;
 
 namespace Meme_Platform
 {
@@ -49,8 +47,8 @@ namespace Meme_Platform
             }
 
             // Registers all inhouse services including DAL repos.
-            services.AddSingleton<UIConfig>();
             services.Bootstrap(Configuration);
+            services.BootstrapIntegrationLayer();
 
             // Register MVC services.
             services.AddTransient<ManageUserProfilesFilter>();
@@ -60,6 +58,13 @@ namespace Meme_Platform
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            IPluginStore pluginStore = app.ApplicationServices.GetService<IPluginStore>();
+            var plugins = pluginStore.ScanForPlugins($"{Directory.GetCurrentDirectory()}/MPPlugins");
+            foreach (var plugin in plugins)
+            {
+                pluginStore.RegisterPlugin(plugin);
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

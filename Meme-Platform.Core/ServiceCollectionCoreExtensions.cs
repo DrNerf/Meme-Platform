@@ -15,6 +15,7 @@ namespace Meme_Platform.Core
         public static void Bootstrap(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<CoreConfig>();
+            services.AddSingleton<UIConfig>();
             services.AddRepositories(configuration);
             services.AddTransformers();
             services.AddServices();

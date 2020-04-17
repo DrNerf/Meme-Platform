@@ -15,11 +15,14 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\Meme-Platform.Core\Meme-Platform.Core.csproj" />
+    <ProjectReference Include="..\Meme-Platform.IL\Meme-Platform.IL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Meme_Platform.Attributes;
 using Meme_Platform.Core.Models;
 using Meme_Platform.Core.Services.Interfaces;
+using Meme_Platform.IL.Events;
 using Meme_Platform.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,9 @@ namespace Meme_Platform.Controllers
 
         [Inject]
         private readonly ICommentService commentService;
+
+        [Inject]
+        private readonly IEventPublisher eventPublisher;
 
         public IActionResult Create()
         {
@@ -60,28 +64,26 @@ namespace Meme_Platform.Controllers
                 return BadRequest("Invalid input data!");
             }
 
+            PostModel post = null;
             if (request.Image != null)
             {
                 using (var stream = new MemoryStream())
                 {
                     await request.Image.CopyToAsync(stream);
                     var extension = Path.GetExtension(request.Image.FileName);
-                    await postService.PostImage(request.Title, stream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
+                    post = await postService.PostImage(request.Title, stream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
                 }
             }
             else if (!string.IsNullOrEmpty(request.youTubeLink))
             {
-                await postService.PostYTVideo(request.Title, request.youTubeLink, User.Identity.Name, request.IsNSFW);
+                post = await postService.PostYTVideo(request.Title, request.youTubeLink, User.Identity.Name, request.IsNSFW);
             }
             else
             {
                 return BadRequest();
             }
 
-            // Don't await so we dont slow down the upload.
-            // TODO: fix slack hook
-            //SlackHelper.SendNotification(dbPost, GetCurrentWebsiteRoot());
-
+            eventPublisher.Publish<IPostCreatedEventHandler, PostModel>(post);
             return RedirectToAction("Index", "Home");
         }
 

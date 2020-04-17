@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform", "Meme-Platform\Meme-Platform.csproj", "{9BE9B85A-F3F5-456E-ACB5-91C3949358C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform", "Meme-Platform\Meme-Platform.csproj", "{9BE9B85A-F3F5-456E-ACB5-91C3949358C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform.DAL", "Meme-Platform.DAL\Meme-Platform.DAL.csproj", "{BB90A969-92B1-4185-AA18-D1AB7C145C15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform.DAL", "Meme-Platform.DAL\Meme-Platform.DAL.csproj", "{BB90A969-92B1-4185-AA18-D1AB7C145C15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meme-Platform.Core", "Meme-Platform.Core\Meme-Platform.Core.csproj", "{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform.Core", "Meme-Platform.Core\Meme-Platform.Core.csproj", "{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform.IL", "Meme-Platform.IL\Meme-Platform.IL.csproj", "{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A41B0BD-87BC-45D6-BD8D-347FE8F1C0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
