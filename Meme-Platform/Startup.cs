@@ -1,22 +1,33 @@
 using Meme_Platform.Attributes;
 using Meme_Platform.Core;
 using Meme_Platform.IL;
+using Meme_Platform.IL.Events;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Meme_Platform
 {
     public class Startup
     {
+
+        private IEnumerable<IPlugin> plugins;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +40,10 @@ namespace Meme_Platform
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            plugins = AssemblyScanner.ScanForPlugins(
+                $"{Directory.GetCurrentDirectory()}/MPPlugins",
+                new SerilogLoggerProvider(Log.Logger).CreateLogger(nameof(AssemblyScanner)));
+
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
 
@@ -46,6 +61,20 @@ namespace Meme_Platform
                 mvcBuilder.AddRazorRuntimeCompilation();
             }
 
+            // Plug all plugin assemblies into the MVC app parts, thus registering all plugin controllers.
+            if (plugins.Any())
+            {
+                foreach (var assembly in plugins.Select(p => p.GetType().Assembly).Distinct())
+                {
+                    mvcBuilder.AddApplicationPart(assembly);
+                }
+
+                foreach (var plugin in plugins)
+                {
+                    plugin.ConfigureServices(services);
+                }
+            }
+
             // Registers all inhouse services including DAL repos.
             services.Bootstrap(Configuration);
             services.BootstrapIntegrationLayer();
@@ -58,8 +87,8 @@ namespace Meme_Platform
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            IPluginStore pluginStore = app.ApplicationServices.GetService<IPluginStore>();
-            var plugins = pluginStore.ScanForPlugins($"{Directory.GetCurrentDirectory()}/MPPlugins");
+            var pluginStore = app.ApplicationServices.GetService<IPluginStore>();
+
             foreach (var plugin in plugins)
             {
                 pluginStore.RegisterPlugin(plugin);

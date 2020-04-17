@@ -20,8 +20,8 @@ namespace Meme_Platform
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
 #if DEBUG
-//                .WriteTo.Console()
-//#else
+                .WriteTo.Console()
+#else
                 .WriteTo.File("Logs/log-.log", rollingInterval: RollingInterval.Day)
 #endif
                 .CreateLogger();

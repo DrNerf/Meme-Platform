@@ -6,10 +6,11 @@ namespace Meme_Platform.IL
 {
     public static class Extensions
     {
-        public static void BootstrapIntegrationLayer(this IServiceCollection services)
+        public static void BootstrapIntegrationLayer(
+            this IServiceCollection services)
         {
-            services.AddSingleton<IEventHandlerStore, EventHandlerStore>();
             services.AddSingleton<IPluginStore, PluginStore>();
+            services.AddSingleton<IEventHandlerStore, EventHandlerStore>();
 
             services.AddTransient<IEventPublisher, EventPublisher>();
         }
