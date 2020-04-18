@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace Meme_Platform.Controllers
 {
-    [Authorize]
-    [ServiceFilter(typeof(ManageUserProfilesFilter))]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPostService postService;
@@ -24,6 +22,7 @@ namespace Meme_Platform.Controllers
             this.postService = postService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var viewModel = new HomeViewModel
@@ -36,6 +35,7 @@ namespace Meme_Platform.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public IActionResult Posts(int page)
         {
             return ViewComponent("PostsPage", new { page });
@@ -43,6 +43,7 @@ namespace Meme_Platform.Controllers
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

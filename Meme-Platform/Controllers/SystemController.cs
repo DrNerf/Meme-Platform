@@ -13,10 +13,11 @@ namespace Meme_Platform.Controllers
         [Inject]
         private readonly IActionDescriptorCollectionProvider actionDescriptorCollection;
 
+        [HttpGet]
         public IActionResult Controllers()
         {
             return Ok(actionDescriptorCollection.ActionDescriptors.Items
-                .Select(i => new { i.DisplayName, i.RouteValues, i.AttributeRouteInfo })
+                .Select(i => i.DisplayName)
                 .ToList());
         }
     }

@@ -24,6 +24,7 @@ namespace Meme_Platform.Controllers
         }
 
         [Route("image/{id}.{extension}")]
+        [HttpGet]
         public IActionResult GetImage(int id, string extension)
         {
             try

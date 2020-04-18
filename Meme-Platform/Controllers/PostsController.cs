@@ -26,11 +26,13 @@ namespace Meme_Platform.Controllers
         [Inject]
         private readonly IEventPublisher eventPublisher;
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult View(int id)
         {
             var post = postService.GetPost(id);

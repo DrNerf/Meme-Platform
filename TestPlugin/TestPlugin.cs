@@ -46,6 +46,7 @@ namespace TestPlugin
 
     public class TestPluginController : PluginController
     {
+        [HttpGet]
         public IActionResult Marco()
         {
             return Ok("Polo");
