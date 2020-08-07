@@ -16,7 +16,11 @@ namespace Meme_Platform
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
+#if DEBUG
+                .MinimumLevel.Debug()
+#else
+                .MinimumLevel.Warning()
+#endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
 #if DEBUG

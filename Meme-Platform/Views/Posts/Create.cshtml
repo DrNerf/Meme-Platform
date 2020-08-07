@@ -3,45 +3,106 @@
     ViewData["Title"] = "Create post";
 }
 
-<div class="col-sm-4">
-    <div class="container-fluid">
-        @using (Html.BeginForm("Upload", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form-group">
-                <input class="form-control" name="title" id="title" placeholder="Title:" />
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="generator-tab" data-toggle="tab" href="#mp-generator" role="tab" aria-controls="mp-generator" aria-selected="true">
+            Generator
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="upload-tab" data-toggle="tab" href="#mp-upload" role="tab" aria-controls="mp-upload" aria-selected="false">
+            Upload
+        </a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="mp-generator" role="tabpanel" aria-labelledby="generator-tab">
+        <iframe src="/proxy/imgflip/memegenerator"></iframe>
+        <div id="blur-overlay">
+            <img src="~/img/patrick.gif" />
+        </div>
+        <strong>Powered by <img src="https://imgflip.com/imgflip_white_96.png" style="height: 2em;" /></strong>
+        <div id="no-title-toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast">
+            <div class="toast-header">
+                <span class="fa fa-exclamation-circle"></span>&nbsp;
+                <strong class="mr-auto">Oof</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <input type="file" name="image" class="input-files btn btn-secondary" id="file-input" />
-                <input type="text"
-                       name="youTubeLink"
-                       style="display: none;"
-                       class="form-control"
-                       id="youtube-input"
-                       placeholder="YouTube video link..." />
+            <div class="toast-body">
+                Tis a dank meme, but it needs a title.
             </div>
-            <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="isNSFW" name="isNSFW" value="true">
-                    <label class="custom-control-label" for="isNSFW">
-                        Not safe for work (Graphic content or nudity)
-                    </label>
-                    <input type="hidden" value="false" name="isNSFW" />
+        </div>
+        <div id="server-error-toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast">
+            <div class="toast-header">
+                <span class="fa fa-exclamation-circle"></span>&nbsp;
+                <strong class="mr-auto">Oof</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Unknown server error. Try to shout at the boomer who administrates this.
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="mp-upload" role="tabpanel" aria-labelledby="upload-tab">
+        <div class="col-sm-4" style="padding-left: 0px;">
+            @using (Html.BeginForm("Upload", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <br />
+                <div class="form-group">
+                    <input class="form-control" name="title" id="title" placeholder="Title:" />
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" name="button" class="btn btn-primary">
-                    <span class="fa fa-upload"></span>
-                    Upload
-                </button>
-                <button type="button" class="btn btn-default" id="button-play">
-                    <span class="fa fa-play"></span>
-                </button>
-            </div>
-        }
+                <div class="form-group">
+                    <input type="file" name="image" class="input-files btn btn-secondary" id="file-input" />
+                    <input type="text"
+                           name="youTubeLink"
+                           style="display: none;"
+                           class="form-control"
+                           id="youtube-input"
+                           placeholder="YouTube video link..." />
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="isNSFW" name="isNSFW" value="true">
+                        <label class="custom-control-label" for="isNSFW">
+                            Not safe for work (Graphic content or nudity)
+                        </label>
+                        <input type="hidden" value="false" name="isNSFW" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="button" class="btn btn-primary">
+                        <span class="fa fa-upload"></span>
+                        Upload
+                    </button>
+                    <button type="button" class="btn btn-default" id="button-play">
+                        <span class="fa fa-play"></span>
+                    </button>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
+<div id="memegen-additional-dom" class="d-none">
+    <div class="mm-box-edit">
+        <input id="memegen-title" class="mm-text" type="text" placeholder="Title:" required />
+    </div>
+    <div class="check-wrap memegen-nsfw">
+        <svg viewBox="0 0 10 10"><path d="M2,5l2,3l4,-6"></path></svg>
+        <div class="check-text">NSFW <small>Not safe for work (Graphic content or nudity)</small></div>
+    </div>
+    <br />
+    <br />
+    <div class="memegen-upload b but">Upload Meme</div>
+</div>
+
 @section Scripts {
+    <script src="~/js/imgflip-proxy.js"></script>
     <script>
         $(function () {
             $('#button-play').click(function () {
@@ -52,5 +113,7 @@
                 });
             });
         });
+
+        ImgFlipProxy.init();
     </script>
 }

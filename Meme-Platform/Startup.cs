@@ -2,11 +2,14 @@ using Meme_Platform.Attributes;
 using Meme_Platform.Core;
 using Meme_Platform.IL;
 using Meme_Platform.IL.Events;
+using Meme_Platform.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -21,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Meme_Platform
 {
@@ -85,6 +89,34 @@ namespace Meme_Platform
             services.Bootstrap(Configuration);
             services.BootstrapIntegrationLayer();
 
+            services.AddSingleton<IProxyService, ProxyService>((a) => new ProxyService(new SharedProxyOptions 
+            {
+                PrepareRequest = (request, message) => Task.Run(() => 
+                {
+                    // Make sure the proxy won't expose any AzureAD cookies.
+                    message.Headers.Remove("Cookie");
+
+                    var publicCookiesStrings = request.Cookies.Where(c => !c.Key.Contains("AzureAD", StringComparison.OrdinalIgnoreCase))
+                        .Select(c => $"{c.Key}={c.Value}").ToList();
+                    foreach (var cookie in publicCookiesStrings)
+                    {
+                        message.Headers.Add("Cookie", cookie);
+                    }
+
+                    // Set the origin header to avoid CORS errors.
+                    message.Headers.Remove("Origin");
+                    message.Headers.Add("Origin", $"{message.RequestUri.Scheme}://{message.RequestUri.Host}");
+                    message.Headers.Remove("Referer");
+                    message.Headers.Add(
+                        "Referer",
+                        $"{message.RequestUri.Scheme}://{message.RequestUri.Host}{message.RequestUri.AbsolutePath.Substring(1)}");
+
+#if DEBUG
+                    Log.Logger.Debug($"Proxying request: {request.GetEncodedPathAndQuery()} ->\n{message}");
+#endif
+                })
+            }));
+
             // Register MVC services.
             services.AddTransient<ManageUserProfilesFilter>();
             services.AddTransient<DependencyInjectorFilter>();
@@ -123,6 +155,36 @@ namespace Meme_Platform
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                //IMGFLIP proxy
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy",
+                    "proxy/imgflip/{*path}",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_get_le_data",
+                    "ajax_get_le_data",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_s_meme",
+                    "s/meme/{*path}",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_get_meme_recs",
+                    "ajax_get_meme_recs",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_ajax_meme_search",
+                    "ajax_meme_search_new",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_ajax_meme_done",
+                    "ajax_meme_done_canvas",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_ajax_delete_creation",
+                    "ajax_delete_creation",
+                    new { controller = "ImgFlip", action = "Raw" });
                 endpoints.MapRazorPages();
             });
 

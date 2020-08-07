@@ -90,6 +90,31 @@ namespace Meme_Platform.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> UploadGeneratedMeme(GeneratedUploadRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Title) || string.IsNullOrEmpty(request.ImageUrl))
+            {
+                return BadRequest("Invalid input data!");
+            }
+
+            PostModel post = null;
+            var imageRequest = HttpWebRequest.Create(request.ImageUrl);
+            using (var imageResponse = await imageRequest.GetResponseAsync())
+            {
+                var imageStream = imageResponse.GetResponseStream();
+                var extension = Path.GetExtension(request.ImageUrl);
+                using (var memStream = new MemoryStream())
+                {
+                    await imageStream.CopyToAsync(memStream);
+                    post = await postService.PostImage(request.Title, memStream.ToArray(), extension, User.Identity.Name, request.IsNSFW);
+                }
+            }
+
+            eventPublisher.Publish<IPostCreatedEventHandler, PostModel>(post);
+            return Ok();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Unvote(int id)
         {
             await postService.Unvote(id, User.Identity.Name);

@@ -60,6 +60,9 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         $('[data-toggle="tooltip"]').tooltip();
+        $('.toast').toast({
+            delay: 3000
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

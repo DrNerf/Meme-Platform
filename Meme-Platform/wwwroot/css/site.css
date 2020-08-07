@@ -262,15 +262,14 @@ pre {
 
 .post-panel-body {
     padding: 0px !important;
-
     /*Some funky spacing appears at the bottom of the container without this.*/
     line-height: 0px;
 }
 
-.post-panel-body iframe {
-    width: 100%;
-    height: 500px;
-}
+    .post-panel-body iframe {
+        width: 100%;
+        height: 500px;
+    }
 
 .sidebar .card {
     margin-bottom: 1em;
@@ -282,4 +281,35 @@ pre {
 
 .nav-item {
     cursor: pointer;
+}
+
+
+#mp-generator {
+    position: relative;
+}
+
+    #mp-generator > iframe {
+        width: 100%;
+        height: 720px;
+        border: 0px;
+    }
+
+    #mp-generator > #blur-overlay {
+        position: absolute;
+        top: 1px;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(20px);
+    }
+
+        #mp-generator > #blur-overlay > img {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+        }
+
+#no-title-toast, #server-error-toast {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
