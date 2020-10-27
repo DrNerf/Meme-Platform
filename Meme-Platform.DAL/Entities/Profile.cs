@@ -10,6 +10,10 @@ namespace Meme_Platform.DAL.Entities
 
         public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 
+        public virtual ICollection<Vote> Votes { get; set; } = new List<Vote>();
+
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
         public string ProfilePictureUrl { get; set; }
 
         public string ADIdentifier { get; set; }

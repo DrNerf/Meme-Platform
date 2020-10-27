@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform.Core", "Meme-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meme-Platform.IL", "Meme-Platform.IL\Meme-Platform.IL.csproj", "{D78209F4-8EBE-4CA6-BF96-229A3F8A36C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{70A8DB3F-8748-41DF-BCC9-DA1CE9EC0E13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

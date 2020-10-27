@@ -4,6 +4,7 @@ using Meme_Platform.Core.Transformers.Interfaces;
 using Meme_Platform.DAL;
 using Meme_Platform.DAL.Entities;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Meme_Platform.Core.Services.Classes
 {
@@ -22,7 +23,7 @@ namespace Meme_Platform.Core.Services.Classes
 
         public ProfileModel GetProfile(string ADIndentifier)
         {
-            var profile = profileRepository.Get().FirstOrDefault(p => p.ADIdentifier == ADIndentifier);
+            var profile = GetProfileEntity(ADIndentifier);
             return profile == null ? null : profileTransformer.Transform(profile);
         }
 
@@ -45,9 +46,24 @@ namespace Meme_Platform.Core.Services.Classes
             return profile;
         }
 
+        public Task UpdateProfile(string ADIdentifier, string nickname, string profilePictureUrl)
+        {
+            var profile = GetProfileEntity(ADIdentifier);
+
+            profile.Nickname = nickname;
+            profile.ProfilePictureUrl = profilePictureUrl;
+
+            return profileRepository.SaveChangesAsync();
+        }
+
         public void Dispose()
         {
             profileRepository?.Dispose();
+        }
+
+        private Profile GetProfileEntity(string ADIndentifier)
+        {
+            return profileRepository.Get().FirstOrDefault(p => p.ADIdentifier == ADIndentifier);
         }
     }
 }

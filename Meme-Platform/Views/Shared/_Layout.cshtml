@@ -15,37 +15,6 @@
     @RenderSection("styles", required: false)
 </head>
 <body class="scrollbar">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark fixed-top bg-primary box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="@(uiConfig.SiteLogo)" width="25" height="25" class="d-inline-block align-top" alt=""/>
-                    @uiConfig.SiteName
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="generatorDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Meme Generator
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="generatorDropdown">
-                                <a class="dropdown-item" href="https://imgflip.com/memegenerator" target="_blank">imgflip</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="https://memegenerator.net/" target="_blank">MemeGenerator.net</a>
-                                <a class="dropdown-item" href="https://makeameme.org/memegenerator target=" _blank"">MakeAMeme</a>
-                                <a class="dropdown-item" href="http://memeful.com/generator" target="_blank">Memeful</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
     <div class="container">
         @RenderBody()
     </div>

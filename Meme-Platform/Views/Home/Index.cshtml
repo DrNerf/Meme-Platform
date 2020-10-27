@@ -18,14 +18,23 @@
         </div>
     </div>
     <div class="col-lg-4 sidebar">
-        <div>
-            <a href="@Url.Action("Create", "Posts")"
-               class="btn btn-primary btn-block">
-                <span class="glyphicon glyphicon-upload"></span>
+        <div class="card">
+            <img class="card-img-top" src="/Profile/Avatar" />
+            <div class="card-header">
+                <i class="fa fa-user"></i> @ViewBag.UserProfile.Nickname
+                <a id="edit-profile-btn" class="float-right text-primary" href="#" data-toggle="modal" data-target="#edit-profile-modal"><i class="fa fa-user-edit"></i></a>
+            </div>
+
+            <div class="card-body"><i class="fa fa-images"></i> Posts: @ViewBag.UserProfile.PostsCount</div>
+            <div class="card-body"><i class="fa fa-vote-yea"></i> Votes: @ViewBag.UserProfile.VotesCount</div>
+            <div class="card-body"><i class="fa fa-comments"></i> Comments: @ViewBag.UserProfile.CommentsCount</div>
+            <div class="card-body"><i class="fa fa-arrow-circle-up"></i> Top score: @ViewBag.UserProfile.MaxScore</div>
+            <a class="card-footer btn btn-primary" href="@Url.Action("Create", "Posts")">
+                <span class="fa fa-upload"></span>
                 Upload
             </a>
         </div>
-        <br />
+
         @if (Model.PostOfTheDay != null)
         {
             <div class="card">
@@ -92,6 +101,8 @@
     </div>
 </div>
 
+@await Component.InvokeAsync("EditProfile")
+
 
 @section scripts{
     <script src="~/js/voting-functions.js"></script>
@@ -126,6 +137,21 @@
                 } else {
                     toastr["error"]("Can't locate post Id!", "WTF");
                 }
+            });
+
+            $('#save-profile-btn').on('click', function () {
+                var profileData = {
+                    nickName: $('#profile-nickname').val(),
+                    profilePictureURL: $('#profile-avatar-url').val()
+                };
+
+                $(this).hide();
+                $('#saving-profile-btn').removeClass('d-none');
+                $.post('@Url.Action("Update", "Profile")', profileData, function () {
+                    window.location.href = '/';
+                }).error(function () {
+                    toastr["error"]("Server error!", "Oof");
+                });
             });
         });
     </script>

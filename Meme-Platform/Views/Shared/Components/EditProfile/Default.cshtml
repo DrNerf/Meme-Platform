@@ -1,0 +1,33 @@
+﻿@model Meme_Platform.Core.Models.ProfileModel
+
+<div class="modal fade" id="edit-profile-modal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-user-edit"></i> Edit profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nickname</label>
+                    <input id="profile-nickname" class="form-control" type="text" value="@(Model.Nickname)" min="3" />
+                </div>
+                <div class="form-group">
+                    <label>Avatar URL</label>
+                    <input id="profile-avatar-url" class="form-control" type="text" value="@(Model.ProfilePictureUrl)" min="3" />
+                    <small class="form-text text-muted">URL to an image. Works best if the URL ends in an image extension like .png/.jpeg</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                <button id="save-profile-btn" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                <button id="saving-profile-btn" class="btn btn-primary d-none" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

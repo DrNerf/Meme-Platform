@@ -11,7 +11,8 @@
         '.gen-login-wrap',
         '#arc-widget-container',
         '.mm-generate.b.but',
-        '.gen-login-wrap'
+        '.gen-login-wrap',
+        '.ibox:contains("Looking for games to play during your virtual game night?")'
     ],
     init: function () {
         // Hide some elements we don't need and insert our custom stuff.
@@ -25,6 +26,7 @@
             $('.check-wrap.gen-private', $this.contents()).click().hide();
             $($('#memegen-additional-dom').html()).insertBefore($('.gen-wrap', $this.contents()));
             $('.memegen-upload', $this.contents()).on('click', _this.uploadMeme.bind(_this));
+            $('#mm-search', $this.contents()).prop('disabled', false).prop('readonly', false);
 
             _this.hideBlur();
         });

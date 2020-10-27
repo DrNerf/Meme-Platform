@@ -185,6 +185,14 @@ namespace Meme_Platform
                     "ImgflipHttpProxy_ajax_delete_creation",
                     "ajax_delete_creation",
                     new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_service_worker.js",
+                    "service-worker.js",
+                    new { controller = "ImgFlip", action = "Raw" });
+                endpoints.MapControllerRoute(
+                    "ImgflipHttpProxy_offline",
+                    "offline",
+                    new { controller = "ImgFlip", action = "Raw" });
                 endpoints.MapRazorPages();
             });
 
